@@ -1,0 +1,18 @@
+# ห้าม commit ไฟล์แชทดิบ / ข้อมูลลูกค้า (มี PII)
+*.rar
+*.zip
+/raw/
+/data/
+/exports/
+# ไฟล์แชท export
+*LINE*.txt
+*Messenger*.txt
+*chat*.txt
+# รูป screenshot แชท
+Screenshot*.png
+*.jpg
+*.jpeg
+# ชั่วคราว
+*.tmp
+.DS_Store
+Thumbs.db
