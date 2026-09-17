@@ -4,6 +4,12 @@
 /raw/
 /data/
 /exports/
+/output/
+# ผลลัพธ์จากสคริปต์ export/classify (มี PII)
+conversations/
+summary.csv
+classified.csv
+category_stats.csv
 # ไฟล์แชท export
 *LINE*.txt
 *Messenger*.txt
