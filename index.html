@@ -17,8 +17,7 @@
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
       color-scheme: dark;
-      --plane:#0d0d0d; --surface:#1a1a19;
-      --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
+      --plane:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
       --grid:#2c2c2a; --baseline:#383835; --border:rgba(255,255,255,0.10);
       --pre:#3987e5; --post:#d95926; --other:#898781; --bar:#3987e5;
       --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
@@ -27,15 +26,13 @@
   }
   :root[data-theme="dark"]{
     color-scheme: dark;
-    --plane:#0d0d0d; --surface:#1a1a19;
-    --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
+    --plane:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
     --grid:#2c2c2a; --baseline:#383835; --border:rgba(255,255,255,0.10);
     --pre:#3987e5; --post:#d95926; --other:#898781; --bar:#3987e5;
     --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
     --pre-soft:rgba(57,135,229,0.20); --post-soft:rgba(217,89,38,0.20); --ln-soft:rgba(6,199,85,.22);
   }
-  *{box-sizing:border-box}
-  html,body{margin:0}
+  *{box-sizing:border-box} html,body{margin:0}
   body{background:var(--plane); color:var(--ink);
     font-family:system-ui,-apple-system,"Segoe UI","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; line-height:1.55; padding:24px 16px 48px}
   .wrap{max-width:880px; margin:0 auto}
@@ -43,17 +40,25 @@
   h1{font-size:1.5rem; margin:0 0 4px}
   .sub{color:var(--ink-2); font-size:.9rem; margin:0}
   .meta{color:var(--muted); font-size:.8rem; margin-top:4px}
-
   .topbar{position:fixed; top:12px; right:12px; z-index:10; display:flex; gap:6px}
   .seg-ctl{display:flex; background:var(--surface); border:1px solid var(--border); border-radius:8px; overflow:hidden}
   .seg-ctl button{background:transparent; color:var(--ink-2); border:0; padding:6px 10px; font-size:.78rem; cursor:pointer; font-family:inherit}
   .seg-ctl button.on{background:var(--pre); color:#fff}
   .theme-btn{background:var(--surface); color:var(--ink-2); border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:.8rem; cursor:pointer; font-family:inherit}
 
-  .section-head{display:flex; align-items:center; gap:10px; margin:40px 0 4px; flex-wrap:wrap}
+  /* tabs */
+  .tabs{display:flex; gap:6px; margin:18px 0 8px; border-bottom:1px solid var(--grid)}
+  .tabs button{background:transparent; border:0; border-bottom:2px solid transparent; color:var(--ink-2);
+    padding:10px 14px; font-size:.92rem; font-weight:600; cursor:pointer; font-family:inherit; margin-bottom:-1px}
+  .tabs button.on{color:var(--pre); border-bottom-color:var(--pre)}
+  .panel{display:none} .panel.on{display:block}
+
+  .section-head{display:flex; align-items:center; gap:10px; margin:32px 0 4px; flex-wrap:wrap}
+  .section-head:first-child{margin-top:16px}
   .section-head .tag{font-size:.72rem; font-weight:700; letter-spacing:.04em; padding:3px 8px; border-radius:6px}
   .tag.mg{background:var(--pre-soft); color:var(--pre)}
   .tag.ln{background:var(--ln-soft); color:#06843f}
+  .tag.sc{background:var(--post-soft); color:var(--post)}
   :root[data-theme="dark"] .tag.ln{color:#3ddc85}
   @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .tag.ln{color:#3ddc85}}
   .section-head h2{font-size:1.15rem; margin:0}
@@ -66,6 +71,7 @@
   .tile .lab{font-size:.8rem; color:var(--ink-2); display:flex; align-items:center; gap:6px}
   .tile .val{font-size:1.8rem; font-weight:700; margin-top:4px; letter-spacing:-.02em}
   .tile.hero .val{font-size:2.6rem; color:var(--pre)}
+  .tile.hero.green .val{color:var(--good)}
   .tile .n{font-size:.8rem; color:var(--muted); margin-top:2px}
   .dot{width:10px; height:10px; border-radius:50%; display:inline-block; flex:none}
   .dot.pre{background:var(--pre)} .dot.post{background:var(--post)} .dot.other{background:var(--other)}
@@ -92,7 +98,7 @@
 
   .stack{display:flex; height:34px; border-radius:8px; overflow:hidden; border:1px solid var(--border)}
   .seg{display:flex; align-items:center; justify-content:center; color:#fff; font-size:.78rem; font-weight:700}
-  .seg.g{background:var(--good)} .seg.w{background:var(--warn); color:#3a2a00} .seg.c{background:var(--crit)}
+  .seg.g{background:var(--good)} .seg.w{background:var(--warn); color:#3a2a00} .seg.c{background:var(--crit)} .seg.o{background:var(--other)}
   .stack-legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; font-size:.8rem; color:var(--ink-2)}
 
   .note{background:var(--post-soft); border:1px solid var(--border); border-left:3px solid var(--post);
@@ -104,21 +110,26 @@
   .find li{font-size:.88rem; color:var(--ink-2); margin-bottom:8px}
   .find li b{color:var(--ink)}
 
-  details{margin-top:4px}
+  details{margin-top:4px; margin-bottom:16px}
   summary{cursor:pointer; font-size:.85rem; color:var(--ink-2); padding:6px 0}
-  table{width:100%; border-collapse:collapse; font-size:.82rem; margin-top:8px}
-  th,td{text-align:left; padding:7px 8px; border-bottom:1px solid var(--grid)}
+  table{width:100%; border-collapse:collapse; font-size:.8rem; margin-top:8px}
+  th,td{text-align:left; padding:6px 8px; border-bottom:1px solid var(--grid); vertical-align:top}
   th{color:var(--muted); font-weight:600}
+  td.c{text-align:center}
   td.num{text-align:right; font-variant-numeric:tabular-nums}
+  .pill{font-size:.72rem; padding:1px 7px; border-radius:20px; white-space:nowrap}
+  .pill.ok{background:rgba(12,163,12,.14); color:var(--good)}
+  .pill.pend{background:rgba(250,178,25,.16); color:#8a6100}
+  :root[data-theme="dark"] .pill.pend{color:var(--warn)}
+  @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill.pend{color:var(--warn)}}
+  .pill.mute{background:var(--grid); color:var(--ink-2)}
   .foot{color:var(--muted); font-size:.75rem; margin-top:28px; text-align:center}
 </style>
 </head>
 <body>
 <div class="topbar">
   <div class="seg-ctl" id="langCtl">
-    <button data-lang="th">ไทย</button>
-    <button data-lang="en">EN</button>
-    <button data-lang="ja">日本語</button>
+    <button data-lang="th">ไทย</button><button data-lang="en">EN</button><button data-lang="ja">日本語</button>
   </div>
   <button class="theme-btn" id="themeBtn" data-i18n="themeBtn">◐</button>
 </div>
@@ -130,179 +141,261 @@
     <p class="meta" data-i18n="meta"></p>
   </header>
 
-  <!-- SESSION 1: MESSENGER -->
-  <div class="section-head"><span class="tag mg">MESSENGER</span><h2 data-i18n="s1_h2"></h2></div>
-  <p class="sub" data-i18n="s1_sub"></p>
-  <div class="tiles">
-    <div class="tile hero"><div class="lab"><span class="dot pre"></span><span data-i18n="t_pre"></span></div>
-      <div class="val">72.6%</div><div class="n" data-i18n="t_pre_n"></div></div>
-    <div class="tile"><div class="lab"><span class="dot post"></span><span data-i18n="t_post"></span></div>
-      <div class="val">16.7%</div><div class="n" data-i18n="t_post_n"></div></div>
-    <div class="tile"><div class="lab"><span class="dot other"></span><span data-i18n="t_other"></span></div>
-      <div class="val">10.7%</div><div class="n" data-i18n="t_other_n"></div></div>
+  <div class="tabs" id="tabs">
+    <button data-tab="main" class="on" data-i18n="tab_main"></button>
+    <button data-tab="shot" data-i18n="tab_shot"></button>
   </div>
-  <div class="card">
-    <h3 data-i18n="s1_card_h"></h3>
-    <p class="hint" data-i18n="s1_card_hint"></p>
-    <div class="legend">
-      <span><span class="dot pre"></span><span data-i18n="lg_pre"></span></span>
-      <span><span class="dot post"></span><span data-i18n="lg_post"></span></span>
-      <span><span class="dot other"></span><span data-i18n="lg_other"></span></span>
+
+  <!-- ================= TAB 1: MAIN (Messenger + LINE) ================= -->
+  <div class="panel on" id="panel-main">
+    <div class="section-head"><span class="tag mg">MESSENGER</span><h2 data-i18n="s1_h2"></h2></div>
+    <p class="sub" data-i18n="s1_sub"></p>
+    <div class="tiles">
+      <div class="tile hero"><div class="lab"><span class="dot pre"></span><span data-i18n="t_pre"></span></div>
+        <div class="val">72.6%</div><div class="n" data-i18n="t_pre_n"></div></div>
+      <div class="tile"><div class="lab"><span class="dot post"></span><span data-i18n="t_post"></span></div>
+        <div class="val">16.7%</div><div class="n" data-i18n="t_post_n"></div></div>
+      <div class="tile"><div class="lab"><span class="dot other"></span><span data-i18n="t_other"></span></div>
+        <div class="val">10.7%</div><div class="n" data-i18n="t_other_n"></div></div>
     </div>
-    <div id="mgChart"></div>
-  </div>
-  <div class="note" data-i18n="mg_note"></div>
-
-  <!-- SESSION 2: LINE BRAND -->
-  <hr class="div">
-  <div class="section-head"><span class="tag ln" data-i18n="tag_brand"></span><h2>Tulip Sino × Wkwk</h2></div>
-  <p class="sub" data-i18n="s2_sub"></p>
-  <div class="tiles">
-    <div class="tile"><div class="lab" data-i18n="msgs"></div><div class="val">1,660</div><div class="n" data-i18n="s2_days"></div></div>
-    <div class="tile"><div class="lab" data-i18n="top_topic"></div><div class="val" style="font-size:1.2rem" data-i18n="content_w"></div><div class="n" data-i18n="times163"></div></div>
-    <div class="tile"><div class="lab" data-i18n="cust_claim"></div><div class="val">5</div><div class="n" data-i18n="in3yr"></div></div>
-  </div>
-  <div class="card">
-    <h3 data-i18n="topics_h"></h3>
-    <p class="hint" data-i18n="s2_hint"></p>
-    <div id="lnBrandChart"></div>
-  </div>
-
-  <!-- SESSION 3: LINE CS -->
-  <hr class="div">
-  <div class="section-head"><span class="tag ln" data-i18n="tag_cs"></span><h2>CS Asian Bridge × Wkwk</h2></div>
-  <p class="sub" data-i18n="s3_sub"></p>
-  <div class="card">
-    <h3 data-i18n="resp_h"></h3>
-    <p class="hint" data-i18n="resp_hint"></p>
-    <div class="stack">
-      <div class="seg g" style="width:73.9%">73.9%</div>
-      <div class="seg w" style="width:18.2%">18.2%</div>
-      <div class="seg c" style="width:7.9%">7.9%</div>
+    <div class="card">
+      <h3 data-i18n="s1_card_h"></h3><p class="hint" data-i18n="s1_card_hint"></p>
+      <div class="legend">
+        <span><span class="dot pre"></span><span data-i18n="lg_pre"></span></span>
+        <span><span class="dot post"></span><span data-i18n="lg_post"></span></span>
+        <span><span class="dot other"></span><span data-i18n="lg_other"></span></span>
+      </div>
+      <div id="mgChart"></div>
     </div>
-    <div class="stack-legend">
-      <span><span class="dot good"></span><span data-i18n="rl_1h"></span></span>
-      <span><span class="dot warn"></span><span data-i18n="rl_24h"></span></span>
-      <span><span class="dot crit"></span><span data-i18n="rl_over"></span></span>
+    <div class="note" data-i18n="mg_note"></div>
+
+    <hr class="div">
+    <div class="section-head"><span class="tag ln" data-i18n="tag_brand"></span><h2>Tulip Sino × Wkwk</h2></div>
+    <p class="sub" data-i18n="s2_sub"></p>
+    <div class="tiles">
+      <div class="tile"><div class="lab" data-i18n="msgs"></div><div class="val">1,660</div><div class="n" data-i18n="s2_days"></div></div>
+      <div class="tile"><div class="lab" data-i18n="top_topic"></div><div class="val" style="font-size:1.2rem" data-i18n="content_w"></div><div class="n" data-i18n="times163"></div></div>
+      <div class="tile"><div class="lab" data-i18n="cust_claim"></div><div class="val">5</div><div class="n" data-i18n="in3yr"></div></div>
+    </div>
+    <div class="card"><h3 data-i18n="topics_h"></h3><p class="hint" data-i18n="s2_hint"></p><div id="lnBrandChart"></div></div>
+
+    <hr class="div">
+    <div class="section-head"><span class="tag ln" data-i18n="tag_cs"></span><h2>CS Asian Bridge × Wkwk</h2></div>
+    <p class="sub" data-i18n="s3_sub"></p>
+    <div class="card">
+      <h3 data-i18n="resp_h"></h3><p class="hint" data-i18n="resp_hint"></p>
+      <div class="stack"><div class="seg g" style="width:73.9%">73.9%</div><div class="seg w" style="width:18.2%">18.2%</div><div class="seg c" style="width:7.9%">7.9%</div></div>
+      <div class="stack-legend">
+        <span><span class="dot good"></span><span data-i18n="rl_1h"></span></span>
+        <span><span class="dot warn"></span><span data-i18n="rl_24h"></span></span>
+        <span><span class="dot crit"></span><span data-i18n="rl_over"></span></span>
+      </div>
+    </div>
+    <div class="card"><h3 data-i18n="topics_h2"></h3><p class="hint" data-i18n="s3_hint"></p><div id="lnCsChart"></div></div>
+
+    <div class="find">
+      <h3 data-i18n="find_h"></h3>
+      <ul><li data-i18n="find_1"></li><li data-i18n="find_2"></li><li data-i18n="find_3"></li></ul>
     </div>
   </div>
-  <div class="card">
-    <h3 data-i18n="topics_h2"></h3>
-    <p class="hint" data-i18n="s3_hint"></p>
-    <div id="lnCsChart"></div>
-  </div>
 
-  <div class="find">
-    <h3 data-i18n="find_h"></h3>
-    <ul>
-      <li data-i18n="find_1"></li>
-      <li data-i18n="find_2"></li>
-      <li data-i18n="find_3"></li>
-    </ul>
-  </div>
+  <!-- ================= TAB 2: SCREENSHOTS (39 customers) ================= -->
+  <div class="panel" id="panel-shot">
+    <div class="section-head"><span class="tag sc" data-i18n="sc_tag"></span><h2 data-i18n="sc_h2"></h2></div>
+    <p class="sub" data-i18n="sc_sub"></p>
+    <p class="meta" data-i18n="sc_meta"></p>
 
-  <details>
-    <summary data-i18n="tbl_sum"></summary>
-    <table>
-      <thead><tr><th data-i18n="th_src"></th><th data-i18n="th_metric"></th><th class="num" data-i18n="th_val"></th></tr></thead>
-      <tbody id="tbody"></tbody>
-    </table>
-  </details>
+    <div class="tiles">
+      <div class="tile hero"><div class="lab" data-i18n="sc_cust"></div><div class="val">39</div><div class="n" data-i18n="sc_cust_n"></div></div>
+      <div class="tile hero green"><div class="lab"><span class="dot good"></span><span data-i18n="sc_resolved"></span></div><div class="val">71.8%</div><div class="n" data-i18n="sc_resolved_n"></div></div>
+      <div class="tile"><div class="lab"><span class="dot warn"></span><span data-i18n="sc_slow"></span></div><div class="val">41%</div><div class="n" data-i18n="sc_slow_n"></div></div>
+    </div>
+
+    <div class="card">
+      <h3 data-i18n="sc_cat_h"></h3><p class="hint" data-i18n="sc_cat_hint"></p>
+      <div id="scChart"></div>
+    </div>
+
+    <div class="card">
+      <h3 data-i18n="sc_out_h"></h3><p class="hint" data-i18n="sc_out_hint"></p>
+      <div class="stack"><div class="seg g" style="width:71.8%">71.8%</div><div class="seg w" style="width:25.6%">25.6%</div><div class="seg o" style="width:2.6%"></div></div>
+      <div class="stack-legend">
+        <span><span class="dot good"></span><span data-i18n="sc_o_ok"></span></span>
+        <span><span class="dot warn"></span><span data-i18n="sc_o_pend"></span></span>
+        <span><span class="dot other"></span><span data-i18n="sc_o_silent"></span></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 data-i18n="sc_beh_h"></h3><p class="hint" data-i18n="sc_beh_hint"></p>
+      <div class="tiles" style="margin:0">
+        <div class="tile"><div class="lab" data-i18n="sc_b_slow"></div><div class="val">16<span style="font-size:1rem;color:var(--muted)">/39</span></div><div class="n">~41%</div></div>
+        <div class="tile"><div class="lab" data-i18n="sc_b_auto"></div><div class="val">~13<span style="font-size:1rem;color:var(--muted)">/39</span></div><div class="n">~34%</div></div>
+        <div class="tile"><div class="lab" data-i18n="sc_b_lead"></div><div class="val">~9</div><div class="n" data-i18n="sc_b_lead_n"></div></div>
+      </div>
+    </div>
+
+    <div class="find">
+      <h3 data-i18n="sc_find_h"></h3>
+      <ul>
+        <li data-i18n="sc_f1"></li><li data-i18n="sc_f2"></li><li data-i18n="sc_f3"></li>
+        <li data-i18n="sc_f4"></li><li data-i18n="sc_f5"></li><li data-i18n="sc_f6"></li>
+      </ul>
+    </div>
+
+    <details open>
+      <summary data-i18n="sc_tbl_sum"></summary>
+      <table>
+        <thead><tr>
+          <th>ID</th><th data-i18n="sc_th_cat"></th><th data-i18n="sc_th_intent"></th>
+          <th data-i18n="sc_th_out"></th><th class="c" data-i18n="sc_th_auto"></th><th class="c" data-i18n="sc_th_slow"></th>
+        </tr></thead>
+        <tbody id="scBody"></tbody>
+      </table>
+    </details>
+  </div>
 
   <p class="foot" data-i18n="foot"></p>
 </div>
 <div id="tip"></div>
 
 <script>
-// ---------- i18n dictionary ----------
 const S={
- th:{
-  themeBtn:"◐ ธีม", title:"สรุปวิเคราะห์แชทลูกค้า Tulip",
-  subtitle:"วิเคราะห์ 3 แหล่งข้อมูลแยกกัน — Messenger + LINE 2 กลุ่ม (ไม่รวมข้อมูลกัน)",
+ th:{ themeBtn:"◐ ธีม", title:"สรุปวิเคราะห์แชทลูกค้า Tulip",
+  subtitle:"วิเคราะห์หลายแหล่งข้อมูลแยกกัน (ไม่รวมกัน)",
   meta:"ปิดบังชื่อ/เบอร์/ที่อยู่แล้ว (PDPA) · แสดงเฉพาะตัวเลขสรุป ไม่มีข้อมูลรายบุคคล",
-  s1_h2:"ลูกค้า → เพจ", s1_sub:"ลูกค้าทักเข้ามาเรื่องอะไรบ้าง · 383 บทสนทนา · 365 วันย้อนหลัง",
+  tab_main:"แชทหลัก (Messenger + LINE)", tab_shot:"รูปแคปแชท (39 ราย)",
+  s1_h2:"ลูกค้า → เพจ", s1_sub:"ลูกค้าทักเข้ามาเรื่องอะไรบ้าง · 383 บทสนทนา · 365 วัน",
   t_pre:"ก่อนการขาย (สนใจสินค้า)", t_pre_n:"278 จาก 383 บทสนทนา",
-  t_post:"บริการหลังการขาย", t_post_n:"64 บทสนทนา",
-  t_other:"อื่นๆ/ไม่ชัด", t_other_n:"41 บทสนทนา",
-  s1_card_h:"ประเภทการคุย 9 หมวด", s1_card_hint:"เรียงจากมากไปน้อย · สีตามช่วงความสัมพันธ์กับลูกค้า",
+  t_post:"บริการหลังการขาย", t_post_n:"64 บทสนทนา", t_other:"อื่นๆ/ไม่ชัด", t_other_n:"41 บทสนทนา",
+  s1_card_h:"ประเภทการคุย 9 หมวด", s1_card_hint:"เรียงจากมากไปน้อย · สีตามช่วงความสัมพันธ์",
   lg_pre:"🛒 ก่อนการขาย", lg_post:"📦 หลังการขาย", lg_other:"❔ อื่นๆ",
-  mg_note:"<b>⚠️ อ่านประกอบ:</b> ตัวเลขจากการจับคีย์เวิร์ด (rule-based) — หมวด “ทักทาย” (36%) อาจเหมารวมเกินจริง เหมาะดูภาพรวม ถ้าต้องการแม่นระดับตัดสินใจควรทบทวนคีย์เวิร์ด",
+  mg_note:"<b>⚠️ อ่านประกอบ:</b> ตัวเลขจากการจับคีย์เวิร์ด (rule-based) — หมวด “ทักทาย” (36%) อาจเหมารวมเกินจริง",
   tag_brand:"LINE · แบรนด์", tag_cs:"LINE · CS",
   s2_sub:"สายประสานงานแบรนด์/แคมเปญ · ~3 ปี (ต.ค. 2023 → ก.ย. 2026)",
   msgs:"ข้อความรวม", s2_days:"249 วันมีแชท", top_topic:"หัวข้อเด่น", content_w:"คอนเทนต์", times163:"163 ครั้ง",
-  cust_claim:"เคลมลูกค้า", in3yr:"ครั้ง ใน 3 ปี",
-  topics_h:"หัวข้อที่คุยกัน", s2_hint:"นับด้วยคีย์เวิร์ด · เรื่องลูกค้ารายวันแทบไม่ปรากฏ",
+  cust_claim:"เคลมลูกค้า", in3yr:"ครั้ง ใน 3 ปี", topics_h:"หัวข้อที่คุยกัน", s2_hint:"นับด้วยคีย์เวิร์ด · เรื่องลูกค้ารายวันแทบไม่ปรากฏ",
   s3_sub:"สายแก้ปัญหาลูกค้าจริง · ~1 ปี (ก.ย. 2025 → ก.ย. 2026) · 1,227 ข้อความ",
-  resp_h:"⏱️ เวลาที่ CS รอ Wakuwaku ตอบ",
-  resp_hint:"จาก 241 คู่ถาม-ตอบ · median 9 นาที · ทีมตอบเร็ว คอขวดอยู่ที่หางที่ต้องรอแบรนด์",
+  resp_h:"⏱️ เวลาที่ CS รอ Wakuwaku ตอบ", resp_hint:"จาก 241 คู่ถาม-ตอบ · median 9 นาที · คอขวดอยู่ที่หางที่รอแบรนด์",
   rl_1h:"ตอบใน 1 ชม. — 73.9%", rl_24h:"1–24 ชม. — 18.2%", rl_over:"เกิน 24 ชม. — 7.9% (~19 เคส)",
-  topics_h2:"หัวข้อที่คุยกัน", s3_hint:"นับด้วยคีย์เวิร์ด · ของรางวัล/พัสดุ/เคลม เด่นชัด (สายแก้ปัญหาลูกค้า)",
-  find_h:"ข้อค้นพบรวม (จาก 3 แหล่ง)",
-  find_1:"<b>สายแบรนด์ vs สาย CS แยกกันชัดจริง</b> — แบรนด์คุยคอนเทนต์/แคมเปญ (เคลม 5 ครั้งใน 3 ปี) · CS คุยของรางวัล/พัสดุ/เคลม",
-  find_2:"<b>คอขวดไม่ใช่ความเร็วทีม</b> — Wakuwaku ตอบ CS เร็วมาก (median 9 นาที) ปัญหาคือหาง 7.9% ที่รอแบรนด์เกิน 24 ชม.",
-  find_3:"<b>“ของรางวัล/แลกของ” คือจุดร่วม</b> — เด่นทั้ง Messenger (บัตร/ของรางวัล 12.3%) และ LINE CS (81 ครั้ง) → ควรทำคลังคำตอบมาตรฐานก่อน",
-  tbl_sum:"ดูตัวเลขทั้งหมดเป็นตาราง", th_src:"แหล่ง", th_metric:"ตัวชี้วัด", th_val:"ค่า",
-  foot:"3 แหล่งวิเคราะห์แยกกัน ไม่รวมข้อมูล · Messenger 383 บทสนทนา · LINE แบรนด์ 1,660 · LINE CS 1,227 ข้อความ"
+  topics_h2:"หัวข้อที่คุยกัน", s3_hint:"นับด้วยคีย์เวิร์ด · ของรางวัล/พัสดุ/เคลม เด่น",
+  find_h:"ข้อค้นพบ (แชทหลัก)",
+  find_1:"<b>สายแบรนด์ vs สาย CS แยกกันชัด</b> — แบรนด์คุยคอนเทนต์/แคมเปญ · CS คุยของรางวัล/พัสดุ/เคลม",
+  find_2:"<b>คอขวดไม่ใช่ความเร็วทีม</b> — Wakuwaku ตอบเร็ว (median 9 นาที) ปัญหาคือหาง 7.9% ที่รอแบรนด์",
+  find_3:"<b>“ของรางวัล/แลกของ” คือจุดร่วม</b> — เด่นทั้ง Messenger และ LINE CS → ทำคลังคำตอบมาตรฐานก่อน",
+  // TAB 2
+  sc_tag:"SCREENSHOT", sc_h2:"รูปแคปแชท (39 ราย)",
+  sc_sub:"แชทเต็มเธรดที่ capture มือ · 116 ภาพ · เห็นทั้งคำตอบแอด + auto-response + เวลา",
+  sc_meta:"วิเคราะห์แยกจากชุด API 383 และ LINE · เก็บเฉพาะตัวเลขสรุป ปิดบัง PII",
+  sc_cust:"ลูกค้า", sc_cust_n:"116 ภาพ / เต็มเธรด",
+  sc_resolved:"ตอบจบ (resolved)", sc_resolved_n:"28 จาก 39 ราย",
+  sc_slow:"ตอบช้า/ข้ามวัน", sc_slow_n:"16 จาก 39 ราย",
+  sc_cat_h:"ลูกค้าทักมาเรื่องอะไร", sc_cat_hint:"6 หมวด · เรียงจากมากไปน้อย",
+  sc_out_h:"ผลลัพธ์เคส", sc_out_hint:"มิติที่ API ข้อความแรกมองไม่เห็น",
+  sc_o_ok:"ตอบจบ — 71.8% (28)", sc_o_pend:"รอต่อ/ค้าง — 25.6% (10)", sc_o_silent:"ลูกค้าเงียบ — 2.6% (1)",
+  sc_beh_h:"พฤติกรรมการตอบ", sc_beh_hint:"อ่านจาก timestamp + ข้อความในภาพ",
+  sc_b_slow:"ตอบช้า/ข้ามวัน", sc_b_auto:"มี auto-response", sc_b_lead:"ส่งต่อเซลล์", sc_b_lead_n:"ราย (เสี่ยง lead รั่ว)",
+  sc_find_h:"ข้อค้นพบ (รูปแคปแชท)",
+  sc_f1:"<b>สมัคร workshop เป็นก้อนใหญ่ที่ซ่อนอยู่ (~23%)</b> — งาน operational เก็บชื่อ/ยืนยันสิทธิ์ ควรมีฟอร์มลงทะเบียนแยก",
+  sc_f2:"<b>Lead ขายส่งเสี่ยงรั่ว</b> — หลายเคสจบด้วย “ส่งต่อเซลล์” แล้วลูกค้าเงียบ หรือเซลล์โทรไม่ติด",
+  sc_f3:"<b>ตอบช้า/ข้ามวัน ~41%</b> — auto ทักแรกได้ แต่คนตามมาช้า มี “ขออภัยที่ตอบล่าช้า” หลายเคส",
+  sc_f4:"<b>คำถาม “เจ/vegan” ซ้ำบ่อย (~5 ราย)</b> — คำตอบตายตัว (100% เจ/plant-based/keto) เข้าคลัง FAQ ได้ทันที",
+  sc_f5:"<b>ของขาดตลาด + ลิงก์ marketplace เสีย (~3 ราย)</b> — Matcha ขาดซ้ำ, ลิงก์ Lazada ใช้ไม่ได้",
+  sc_f6:"<b>เคสร้องเรียนคุณภาพเชิงลึก 1 ราย</b> — โกโก้ 32% คุณภาพลด คุยยาวข้ามเดือน ต้องส่งแบรนด์",
+  sc_tbl_sum:"ตารางรายลูกค้า 39 ราย (ปิดบัง PII)",
+  sc_th_cat:"หมวด", sc_th_intent:"ลูกค้าต้องการ", sc_th_out:"ผล", sc_th_auto:"auto", sc_th_slow:"ช้า",
+  foot:"หลายแหล่งวิเคราะห์แยกกัน ไม่รวมข้อมูล · เก็บเฉพาะตัวเลขสรุป ไม่มี PII"
  },
- en:{
-  themeBtn:"◐ Theme", title:"Tulip Customer Chat Analysis",
-  subtitle:"Three data sources analyzed separately — Messenger + two LINE groups (not merged)",
+ en:{ themeBtn:"◐ Theme", title:"Tulip Customer Chat Analysis",
+  subtitle:"Multiple data sources analyzed separately (not merged)",
   meta:"Names/phones/addresses masked (PDPA) · aggregate figures only, no individual data",
-  s1_h2:"Customers → Page", s1_sub:"What customers reach out about · 383 conversations · last 365 days",
-  t_pre:"Pre-sale (product interest)", t_pre_n:"278 of 383 conversations",
-  t_post:"After-sales service", t_post_n:"64 conversations",
-  t_other:"Other / unclear", t_other_n:"41 conversations",
+  tab_main:"Main chats (Messenger + LINE)", tab_shot:"Screenshots (39)",
+  s1_h2:"Customers → Page", s1_sub:"What customers reach out about · 383 conversations · 365 days",
+  t_pre:"Pre-sale (interest)", t_pre_n:"278 of 383 conversations",
+  t_post:"After-sales service", t_post_n:"64 conversations", t_other:"Other / unclear", t_other_n:"41 conversations",
   s1_card_h:"9 conversation categories", s1_card_hint:"Sorted high→low · colored by customer stage",
   lg_pre:"🛒 Pre-sale", lg_post:"📦 After-sales", lg_other:"❔ Other",
-  mg_note:"<b>⚠️ Note:</b> Figures are keyword-based (rule-based) — the “Greeting” category (36%) may be over-counted. Good for an overview; refine keywords before decision-grade use.",
+  mg_note:"<b>⚠️ Note:</b> Keyword-based (rule-based) figures — the “Greeting” category (36%) may be over-counted.",
   tag_brand:"LINE · Brand", tag_cs:"LINE · CS",
   s2_sub:"Brand/campaign coordination · ~3 yrs (Oct 2023 → Sep 2026)",
   msgs:"Total messages", s2_days:"249 active days", top_topic:"Top topic", content_w:"Content", times163:"163 times",
-  cust_claim:"Customer claims", in3yr:"times in 3 yrs",
-  topics_h:"Topics discussed", s2_hint:"Keyword-counted · daily customer issues rarely appear",
+  cust_claim:"Customer claims", in3yr:"times in 3 yrs", topics_h:"Topics discussed", s2_hint:"Keyword-counted · daily customer issues rare",
   s3_sub:"Real customer-issue line · ~1 yr (Sep 2025 → Sep 2026) · 1,227 messages",
-  resp_h:"⏱️ CS wait time for Wakuwaku's reply",
-  resp_hint:"From 241 Q&A pairs · median 9 min · team is fast; the bottleneck is the tail waiting on the brand",
+  resp_h:"⏱️ CS wait time for Wakuwaku's reply", resp_hint:"241 Q&A pairs · median 9 min · bottleneck is the brand-waiting tail",
   rl_1h:"Within 1h — 73.9%", rl_24h:"1–24h — 18.2%", rl_over:"Over 24h — 7.9% (~19 cases)",
-  topics_h2:"Topics discussed", s3_hint:"Keyword-counted · rewards/parcels/claims dominate (customer-issue line)",
-  find_h:"Combined findings (3 sources)",
-  find_1:"<b>Brand line vs CS line are clearly separate</b> — brand talks content/campaigns (5 claims in 3 yrs) · CS handles rewards/parcels/claims",
-  find_2:"<b>The bottleneck isn't team speed</b> — Wakuwaku answers CS fast (median 9 min); the issue is the 7.9% tail waiting on the brand over 24h",
-  find_3:"<b>“Rewards/redemption” is the common thread</b> — prominent in both Messenger (Cards/Rewards 12.3%) and LINE CS (81) → build a standard answer bank first",
-  tbl_sum:"View all figures as a table", th_src:"Source", th_metric:"Metric", th_val:"Value",
-  foot:"Three sources analyzed separately, not merged · Messenger 383 conversations · LINE Brand 1,660 · LINE CS 1,227 messages"
+  topics_h2:"Topics discussed", s3_hint:"Keyword-counted · rewards/parcels/claims dominate",
+  find_h:"Findings (main chats)",
+  find_1:"<b>Brand line vs CS line clearly separate</b> — brand = content/campaigns · CS = rewards/parcels/claims",
+  find_2:"<b>Bottleneck isn't team speed</b> — Wakuwaku is fast (median 9 min); the 7.9% tail waits on the brand",
+  find_3:"<b>“Rewards/redemption” is the common thread</b> — in both Messenger & LINE CS → build a standard answer bank",
+  sc_tag:"SCREENSHOT", sc_h2:"Screenshot chats (39)",
+  sc_sub:"Full-thread manual captures · 116 images · shows agent replies + auto-response + timestamps",
+  sc_meta:"Analyzed separately from the API-383 and LINE sets · aggregate only, PII masked",
+  sc_cust:"Customers", sc_cust_n:"116 images / full threads",
+  sc_resolved:"Resolved", sc_resolved_n:"28 of 39",
+  sc_slow:"Slow / next-day reply", sc_slow_n:"16 of 39",
+  sc_cat_h:"What customers reach out about", sc_cat_hint:"6 categories · sorted high→low",
+  sc_out_h:"Case outcome", sc_out_hint:"A dimension the first-message API can't see",
+  sc_o_ok:"Resolved — 71.8% (28)", sc_o_pend:"Pending — 25.6% (10)", sc_o_silent:"Customer went silent — 2.6% (1)",
+  sc_beh_h:"Response behavior", sc_beh_hint:"Read from timestamps + in-image messages",
+  sc_b_slow:"Slow / next-day", sc_b_auto:"Auto-response fired", sc_b_lead:"Handed to sales", sc_b_lead_n:"cases (lead-leak risk)",
+  sc_find_h:"Findings (screenshots)",
+  sc_f1:"<b>Workshop sign-ups are a hidden big chunk (~23%)</b> — operational (collect name/confirm seat); needs a separate registration form",
+  sc_f2:"<b>Wholesale leads can leak</b> — many cases end 'handed to sales' then the customer goes silent or sales can't reach them",
+  sc_f3:"<b>Slow / next-day replies ~41%</b> — auto handles first touch but humans follow up late; many 'sorry for the delay'",
+  sc_f4:"<b>“Vegetarian/vegan” questions recur (~5)</b> — fixed answer (100% veg/plant-based/keto) → straight into the FAQ bank",
+  sc_f5:"<b>Out-of-stock + broken marketplace links (~3)</b> — Matcha repeatedly out, Lazada link dead",
+  sc_f6:"<b>One deep quality complaint</b> — cocoa 32% quality drop, months-long thread, must go to the brand",
+  sc_tbl_sum:"Per-customer table, 39 rows (PII masked)",
+  sc_th_cat:"Category", sc_th_intent:"Customer wants", sc_th_out:"Outcome", sc_th_auto:"auto", sc_th_slow:"slow",
+  foot:"Multiple sources analyzed separately, not merged · aggregate figures only, no PII"
  },
- ja:{
-  themeBtn:"◐ テーマ", title:"Tulip 顧客チャット分析",
-  subtitle:"3つのデータソースを個別に分析 — Messenger + LINE 2グループ（統合なし）",
+ ja:{ themeBtn:"◐ テーマ", title:"Tulip 顧客チャット分析",
+  subtitle:"複数のデータソースを個別に分析（統合なし）",
   meta:"氏名・電話・住所はマスク済み（PDPA）· 集計値のみ、個人データなし",
-  s1_h2:"顧客 → ページ", s1_sub:"顧客の問い合わせ内容 · 383会話 · 過去365日",
-  t_pre:"販売前（商品への関心）", t_pre_n:"383会話中 278",
-  t_post:"アフターサービス", t_post_n:"64会話",
-  t_other:"その他・不明", t_other_n:"41会話",
+  tab_main:"メインチャット (Messenger + LINE)", tab_shot:"スクショ (39件)",
+  s1_h2:"顧客 → ページ", s1_sub:"顧客の問い合わせ内容 · 383会話 · 365日",
+  t_pre:"販売前（関心）", t_pre_n:"383会話中 278",
+  t_post:"アフターサービス", t_post_n:"64会話", t_other:"その他・不明", t_other_n:"41会話",
   s1_card_h:"会話カテゴリ 9種", s1_card_hint:"多い順 · 顧客段階で色分け",
   lg_pre:"🛒 販売前", lg_post:"📦 アフター", lg_other:"❔ その他",
-  mg_note:"<b>⚠️ 注記:</b> 数値はキーワード集計（ルールベース）—「挨拶」カテゴリ（36%）は過大計上の可能性。概観向け。意思決定に使う前にキーワードの見直しを。",
+  mg_note:"<b>⚠️ 注記:</b> キーワード集計（ルールベース）—「挨拶」（36%）は過大計上の可能性。",
   tag_brand:"LINE · ブランド", tag_cs:"LINE · CS",
   s2_sub:"ブランド・キャンペーン調整 · 約3年（2023年10月→2026年9月）",
   msgs:"総メッセージ", s2_days:"稼働249日", top_topic:"主要トピック", content_w:"コンテンツ", times163:"163回",
-  cust_claim:"顧客クレーム", in3yr:"回（3年間）",
-  topics_h:"話題", s2_hint:"キーワード集計 · 日常の顧客案件はほぼ無し",
+  cust_claim:"顧客クレーム", in3yr:"回（3年間）", topics_h:"話題", s2_hint:"キーワード集計 · 日常の顧客案件はほぼ無し",
   s3_sub:"顧客対応ライン · 約1年（2025年9月→2026年9月）· 1,227メッセージ",
-  resp_h:"⏱️ CSがWakuwakuの返信を待つ時間",
-  resp_hint:"241組のやり取り · 中央値9分 · チームは迅速、ボトルネックはブランド待ちの末尾",
+  resp_h:"⏱️ CSがWakuwakuの返信を待つ時間", resp_hint:"241組 · 中央値9分 · ボトルネックはブランド待ちの末尾",
   rl_1h:"1時間以内 — 73.9%", rl_24h:"1–24時間 — 18.2%", rl_over:"24時間超 — 7.9%（約19件）",
-  topics_h2:"話題", s3_hint:"キーワード集計 · 景品・配送・クレームが中心（顧客対応ライン）",
-  find_h:"総合的な発見（3ソース）",
-  find_1:"<b>ブランドラインとCSラインは明確に分離</b> — ブランドはコンテンツ／キャンペーン（3年でクレーム5件）· CSは景品・配送・クレーム",
-  find_2:"<b>ボトルネックはチームの速度ではない</b> — WakuwakuはCSに迅速対応（中央値9分）。問題はブランド待ちで24時間超の7.9%の末尾",
-  find_3:"<b>「景品・引換」が共通テーマ</b> — Messenger（カード・景品 12.3%）とLINE CS（81回）の両方で顕著 → まず標準回答集の整備を",
-  tbl_sum:"全数値を表で見る", th_src:"ソース", th_metric:"指標", th_val:"値",
-  foot:"3ソースを個別に分析、統合なし · Messenger 383会話 · LINEブランド 1,660 · LINE CS 1,227メッセージ"
+  topics_h2:"話題", s3_hint:"キーワード集計 · 景品・配送・クレームが中心",
+  find_h:"発見（メインチャット）",
+  find_1:"<b>ブランドラインとCSラインは明確に分離</b> — ブランド=コンテンツ/企画 · CS=景品/配送/クレーム",
+  find_2:"<b>ボトルネックはチーム速度ではない</b> — Wakuwakuは迅速（中央値9分）、7.9%の末尾がブランド待ち",
+  find_3:"<b>「景品・引換」が共通テーマ</b> — MessengerとLINE CSの両方で顕著 → 標準回答集を先に整備",
+  sc_tag:"スクショ", sc_h2:"スクショチャット（39件）",
+  sc_sub:"手動キャプチャの全スレッド · 116枚 · 担当者返信＋自動応答＋時刻が見える",
+  sc_meta:"API-383・LINEとは別に分析 · 集計値のみ、PIIマスク済み",
+  sc_cust:"顧客", sc_cust_n:"116枚 / 全スレッド",
+  sc_resolved:"解決済み", sc_resolved_n:"39件中28",
+  sc_slow:"返信が遅い/翌日", sc_slow_n:"39件中16",
+  sc_cat_h:"顧客の問い合わせ内容", sc_cat_hint:"6カテゴリ · 多い順",
+  sc_out_h:"案件の結果", sc_out_hint:"最初のメッセージだけのAPIでは見えない軸",
+  sc_o_ok:"解決 — 71.8%（28）", sc_o_pend:"保留 — 25.6%（10）", sc_o_silent:"顧客が沈黙 — 2.6%（1）",
+  sc_beh_h:"応答の挙動", sc_beh_hint:"時刻＋画像内メッセージから判定",
+  sc_b_slow:"遅い/翌日", sc_b_auto:"自動応答あり", sc_b_lead:"営業へ引き継ぎ", sc_b_lead_n:"件（リード漏れリスク）",
+  sc_find_h:"発見（スクショ）",
+  sc_f1:"<b>ワークショップ申込が隠れた大きな塊（約23%）</b> — 運用業務（氏名収集/席確定）、専用登録フォームが必要",
+  sc_f2:"<b>卸リードが漏れうる</b> — 「営業へ引き継ぎ」で終わった後に顧客が沈黙、または営業が連絡取れず",
+  sc_f3:"<b>遅い/翌日返信 約41%</b> — 自動応答は初動対応するが人の follow が遅い、「返信遅延のお詫び」多数",
+  sc_f4:"<b>「ベジ/ヴィーガン」質問が反復（約5件）</b> — 定型回答（100%ベジ/植物性/keto）→ FAQへ直行",
+  sc_f5:"<b>在庫切れ＋マーケットプレイスのリンク切れ（約3件）</b> — Matcha繰り返し欠品、Lazadaリンク不通",
+  sc_f6:"<b>深い品質クレーム1件</b> — ココア32%の品質低下、数ヶ月に及ぶ、ブランド対応が必要",
+  sc_tbl_sum:"顧客別テーブル 39行（PIIマスク済み）",
+  sc_th_cat:"カテゴリ", sc_th_intent:"顧客の要望", sc_th_out:"結果", sc_th_auto:"自動", sc_th_slow:"遅い",
+  foot:"複数ソースを個別に分析、統合なし · 集計値のみ、PIIなし"
  }
 };
 
-// ---------- chart name translations ----------
 const NAMES={
  greet:{th:"สอบถามทั่วไป/ทักทาย",en:"General / Greeting",ja:"一般・挨拶"},
  price:{th:"ถามราคา",en:"Price inquiry",ja:"価格の問合せ"},
@@ -313,7 +406,6 @@ const NAMES={
  prodinfo:{th:"ข้อมูลสินค้า",en:"Product info",ja:"商品情報"},
  parcel:{th:"ติดตามพัสดุ",en:"Parcel tracking",ja:"配送追跡"},
  claim:{th:"เคลม/ปัญหาสินค้า",en:"Claims / Issues",ja:"クレーム・不具合"},
- // LINE
  content:{th:"คอนเทนต์/โพสต์",en:"Content / Posts",ja:"コンテンツ・投稿"},
  priceord:{th:"ราคา/สั่งซื้อ",en:"Price / Orders",ja:"価格・注文"},
  coord:{th:"ประสานงาน/นัดหมาย",en:"Coordination",ja:"調整・打合せ"},
@@ -321,7 +413,8 @@ const NAMES={
  promo:{th:"โปรโมชั่น/แคมเปญ",en:"Promotions / Campaigns",ja:"プロモ・企画"},
  claim2:{th:"เคลม/ปัญหา",en:"Claims / Issues",ja:"クレーム・問題"},
  reward:{th:"ของรางวัล/แลกของ",en:"Rewards / Redemption",ja:"景品・引換"},
- parcel2:{th:"พัสดุ/จัดส่ง",en:"Parcels / Delivery",ja:"配送・発送"}
+ parcel2:{th:"พัสดุ/จัดส่ง",en:"Parcels / Delivery",ja:"配送・発送"},
+ gen:{th:"สอบถามทั่วไป",en:"General inquiry",ja:"一般問い合わせ"}
 };
 
 const mg=[
@@ -337,41 +430,54 @@ const mg=[
 ];
 const lnBrand=[{k:"content",n:163},{k:"priceord",n:73},{k:"coord",n:69},{k:"event",n:57},{k:"promo",n:52},{k:"claim2",n:5}];
 const lnCs=[{k:"coord",n:147},{k:"reward",n:81},{k:"parcel2",n:56},{k:"event",n:29},{k:"claim2",n:22},{k:"priceord",n:19}];
+const sc=[
+  {k:"prodinfo",n:11,label:"11 · 28.2%",pc:"28.2%"},
+  {k:"gen",n:9,label:"9 · 23.1%",pc:"23.1%"},
+  {k:"wholesale",n:8,label:"8 · 20.5%",pc:"20.5%"},
+  {k:"channel",n:5,label:"5 · 12.8%",pc:"12.8%"},
+  {k:"card",n:4,label:"4 · 10.3%",pc:"10.3%"},
+  {k:"other",n:2,label:"2 · 5.1%",pc:"5.1%"},
+];
 
-const tblRows=[
-  ["Messenger",{th:"บทสนทนารวม",en:"Total conversations",ja:"総会話数"},"383"],
-  ["Messenger",{th:"ก่อนการขาย",en:"Pre-sale",ja:"販売前"},"72.6% (278)"],
-  ["Messenger",{th:"หลังการขาย",en:"After-sales",ja:"アフター"},"16.7% (64)"],
-  ["Messenger",{th:"อื่นๆ",en:"Other",ja:"その他"},"10.7% (41)"],
-  ["LINE Brand",{th:"ข้อความรวม",en:"Total messages",ja:"総メッセージ"},"1,660"],
-  ["LINE Brand",{th:"วันมีแชท",en:"Active days",ja:"稼働日数"},"249"],
-  ["LINE Brand",{th:"เคลมลูกค้า",en:"Customer claims",ja:"顧客クレーム"},"5"],
-  ["LINE CS",{th:"ข้อความรวม",en:"Total messages",ja:"総メッセージ"},"1,227"],
-  ["LINE CS",{th:"median เวลาตอบ",en:"Median reply time",ja:"返信中央値"},"9 min"],
-  ["LINE CS",{th:"ตอบใน 1 ชม.",en:"Within 1h",ja:"1時間以内"},"73.9%"],
-  ["LINE CS",{th:"เกิน 24 ชม.",en:"Over 24h",ja:"24時間超"},"7.9%"],
+// per-customer rows (masked). o: ok|pend|silent
+const scRows=[
+ ["C01","gen","ชมสินค้า/ส่งรูปหน้าร้าน","ok",0,0],["C02","gen","สมัคร workshop","ok",0,0],
+ ["C03","gen","ทักแต่ยังไม่ถาม","pend",1,1],["C04","prodinfo","ถาม Matcha Easy Glaze (ขาดตลาด)","ok",1,0],
+ ["C05","channel","ช่องทางซื้อ + ราคาส่ง","ok",0,1],["C06","gen","สมัคร workshop","ok",0,0],
+ ["C07","prodinfo","โกโก้เป็นเจไหม","ok",1,1],["C08","prodinfo","ขนาดพิมพ์ซิลิโคนในสูตร","ok",0,1],
+ ["C09","wholesale","ราคาช็อกโกแลตคอมพาวด์ (สั่งประจำ)","pend",0,0],["C10","gen","workshop ต้องลงทะเบียนไหม","ok",0,0],
+ ["C11","gen","รายละเอียด workshop","ok",0,0],["C12","prodinfo","โกโก้เป็นเจไหม","ok",0,0],
+ ["C13","channel","ซื้อยังไง (EN)","ok",0,0],["C14","prodinfo","ของเข้าเมื่อไหร่ Matcha (ลิงก์เสีย)","pend",0,1],
+ ["C15","prodinfo","ผงโกโก้กินเจได้ไหม","ok",1,1],["C16","wholesale","ราคาส่งผงโกโก้ (รอเซลส์)","pend",0,0],
+ ["C17","other","ลงทะเบียนกิจกรรมเชฟโจ","ok",0,1],["C18","prodinfo","ทิวลิปโกลด์เป็นเจไหม","ok",0,0],
+ ["C19","wholesale","รับไปขาย (ร้านเบเกอรี่)","ok",0,0],["C20","prodinfo","โกโก้เจ/มังสวิรัติ","ok",0,0],
+ ["C21","channel","chunk เลิกผลิต/ซื้อที่ไหน","ok",1,1],["C22","prodinfo","เชิงลึก + ร้องเรียนคุณภาพ 32%","pend",1,1],
+ ["C23","card","ผู้โชคดี ขอรับรางวัล","ok",0,0],["C24","other","ลงทะเบียน workshop + natural/dutch","ok",1,1],
+ ["C25","prodinfo","ถามวันหมดอายุ (สติกเกอร์ลอก)","ok",1,1],["C26","wholesale","ราคาส่งผงโกโก้ (ร้านกาแฟ)","ok",1,1],
+ ["C27","gen","สนใจเวิร์กช็อป","pend",0,0],["C28","wholesale","ขอราคาส่ง","silent",0,1],
+ ["C29","gen","เวิร์กช็อป ถามรอบเพิ่ม","pend",0,0],["C30","gen","สถานที่จัดงาน/สาขาแมคโคร","pend",0,0],
+ ["C31","channel","สั่งผ่านเซลล์ + มีช็อกโกแลตไหม","ok",1,0],["C32","prodinfo","% น้ำตาลในโกโก้","pend",0,1],
+ ["C33","card","ส่งผลงานรับของรางวัล","ok",1,0],["C34","channel","ราคา + ช่องทางซื้อ","ok",0,1],
+ ["C35","card","รหัสลุ้นรางวัล 13 หลัก","ok",0,0],["C36","wholesale","ขั้นต่ำสั่งส่ง (เซลล์โทรไม่ติด)","pend",0,0],
+ ["C37","wholesale","สั่ง 20 ลังขึ้นไป","ok",1,1],["C38","card","ติดตามแลกของรางวัล","ok",1,1],
+ ["C39","wholesale","ราคาส่งดาร์กคอมพาวด์","ok",0,0]
 ];
 
 const tip=document.getElementById("tip");
 let LANG=(function(){try{return localStorage.getItem("tulip_lang")}catch(e){return null}})()||"th";
+function nm(k){return (NAMES[k]&&NAMES[k][LANG])||(NAMES[k]&&NAMES[k].th)||k}
 
-function nm(k){return NAMES[k][LANG]||NAMES[k].th}
 function drawBars(elId, rows, dfltCls){
-  const el=document.getElementById(elId); el.innerHTML="";
+  const el=document.getElementById(elId); if(!el)return; el.innerHTML="";
   const max=Math.max(...rows.map(r=>r.n));
   rows.forEach(d=>{
     const row=document.createElement("div"); row.className="row";
     const nmEl=document.createElement("div"); nmEl.className="name"; nmEl.textContent=nm(d.k); nmEl.title=nm(d.k);
     const track=document.createElement("div"); track.className="track";
-    const pct=d.n/max*100;
-    const txt=d.label!==undefined?d.label:String(d.n);
-    const bar=document.createElement("div"); bar.className="bar "+(d.cls||dfltCls);
-    bar.style.width=pct+"%";
-    // แท่งกว้างพอ → ป้ายในแท่ง (ขาว) · แท่งแคบ → ป้ายนอกแท่ง (สีหมึก)
-    const inside=pct>=28;
+    const pct=d.n/max*100, txt=d.label!==undefined?d.label:String(d.n), inside=pct>=28;
+    const bar=document.createElement("div"); bar.className="bar "+(d.cls||dfltCls); bar.style.width=pct+"%";
     if(inside) bar.textContent=txt;
-    const grp=d.gk?(" · "+S[LANG][d.gk]):"";
-    const detail=d.pc?`${d.n} · ${d.pc}${grp}`:`${d.n}`;
+    const grp=d.gk?(" · "+S[LANG][d.gk]):""; const detail=d.pc?`${d.n} · ${d.pc}${grp}`:`${d.n}`;
     const show=e=>{tip.style.opacity=1; tip.innerHTML=`<b>${nm(d.k)}</b><br>${detail}`;
       tip.style.left=Math.min(e.clientX+14,innerWidth-270)+"px"; tip.style.top=(e.clientY+14)+"px";};
     bar.addEventListener("mousemove",show); bar.addEventListener("mouseleave",()=>tip.style.opacity=0);
@@ -381,24 +487,33 @@ function drawBars(elId, rows, dfltCls){
     row.appendChild(nmEl); row.appendChild(track); el.appendChild(row);
   });
 }
-function renderTable(){
-  const tb=document.getElementById("tbody"); tb.innerHTML="";
-  tblRows.forEach(r=>{const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${r[0]}</td><td>${r[1][LANG]}</td><td class="num">${r[2]}</td>`; tb.appendChild(tr);});
+function renderScTable(){
+  const tb=document.getElementById("scBody"); if(!tb)return; tb.innerHTML="";
+  const OUT={ok:["ok","ตอบจบ","Resolved","解決"],pend:["pend","ค้าง","Pending","保留"],silent:["mute","เงียบ","Silent","沈黙"]};
+  const li=LANG==="en"?2:(LANG==="ja"?3:1);
+  scRows.forEach(r=>{
+    const o=OUT[r[3]];
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${r[0]}</td><td>${nm(r[1])}</td><td>${r[2]}</td>`+
+      `<td><span class="pill ${o[0]}">${o[li]}</span></td>`+
+      `<td class="c">${r[4]?"●":"–"}</td><td class="c">${r[5]?"●":"–"}</td>`;
+    tb.appendChild(tr);
+  });
 }
 function applyLang(){
-  const dict=S[LANG];
-  document.documentElement.lang=LANG;
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const k=el.getAttribute("data-i18n"); if(dict[k]!==undefined) el.innerHTML=dict[k];
-  });
+  const dict=S[LANG]; document.documentElement.lang=LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n"); if(dict[k]!==undefined) el.innerHTML=dict[k];});
   document.querySelectorAll("#langCtl button").forEach(b=>b.classList.toggle("on", b.dataset.lang===LANG));
-  drawBars("mgChart",mg); drawBars("lnBrandChart",lnBrand,"solid"); drawBars("lnCsChart",lnCs,"solid");
-  renderTable();
+  drawBars("mgChart",mg); drawBars("lnBrandChart",lnBrand,"solid"); drawBars("lnCsChart",lnCs,"solid"); drawBars("scChart",sc,"post");
+  renderScTable();
   try{localStorage.setItem("tulip_lang",LANG)}catch(e){}
 }
-document.getElementById("langCtl").addEventListener("click",e=>{
-  const b=e.target.closest("button"); if(!b)return; LANG=b.dataset.lang; applyLang();
+document.getElementById("langCtl").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b)return; LANG=b.dataset.lang; applyLang();});
+document.getElementById("tabs").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return; const t=b.dataset.tab;
+  document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("on",x===b));
+  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id==="panel-"+t));
+  scrollTo({top:0,behavior:"smooth"});
 });
 document.getElementById("themeBtn").addEventListener("click",()=>{
   const cur=document.documentElement.getAttribute("data-theme");
