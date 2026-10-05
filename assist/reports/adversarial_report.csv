@@ -1,0 +1,71 @@
+﻿category,text,needs_human,primary_intent,route,reaches_auto,risk_hits,verdict,note
+decoy,ราคาคุยกันได้ไหมคะ,False,I04,KB_CANDIDATE_HOLD,True,,AUTO_OK,benign price
+decoy,ลังเลว่าจะซื้อตัวไหนดี,False,I07,SALES_OR_H2_REVIEW,False,,HUMAN_FALL,'ลังเล' มี substring 'ลัง' (ขายส่ง)
+decoy,เซลล์บริการดีมากประทับใจ,False,I08,SALES_OR_H2_REVIEW,False,,HUMAN_FALL,'เซลล์' = คำชม ไม่ใช่ขอติดต่อ
+decoy,แพ้ทางเลย อร่อยมากกก,False,I03,H2_HUMAN_DECISION,False,แพ้,HUMAN_FALL,'แพ้ทาง' = สแลงชอบ ไม่ใช่ภูมิแพ้
+typo,ราคาเทาไรคับ,False,I04,KB_CANDIDATE_HOLD,True,,AUTO_OK,typo เทาไร (ตกไม้เอก) แต่มี 'ราคา'
+typo,ซื้อที่ไหนหรอคะ มีช่องทางไหน,False,I05,KB_CANDIDATE_HOLD,True,,AUTO_OK,สะกดห้วน
+typo,มีฮาลานไหม,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,ฮาลาล สะกดผิด -> ควรถึงคน
+typo,แพ้กลูเตนมั้ย,True,I03,H2_HUMAN_DECISION,False,แพ้,SAFE_HUMAN,allergy สะกดถูก
+polysemy,โกโก้เจไหม ราคาเท่าไหร่,True,I03,H1_INFORMATION_INQUIRY,False,,SAFE_HUMAN,เจ = อาหารเจ (claim)
+polysemy,ฝากส่งให้เจด้วยนะคะ,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,เจ = ชื่อคน ไม่ใช่อาหารเจ
+polysemy,สั่งยกลังหนึ่งกี่กล่อง,True,I07,SALES_OR_H2_REVIEW,False,,SAFE_HUMAN,ลัง = หน่วยขายส่งจริง
+polysemy,เพิ่งแพ้บอลมาเลยเซ็ง,False,I03,H2_HUMAN_DECISION,False,แพ้,HUMAN_FALL,แพ้ = แพ้การแข่งขัน
+slang,ตัวนี้ปังมาก ขอราคาหน่อย,False,I04,KB_CANDIDATE_HOLD,True,,AUTO_OK,ปัง = ดี (สแลง) + ราคา
+slang,จัดส่งงับ รอเลขพัสดุอยู่,True,I12,H1_INFORMATION_INQUIRY,False,,SAFE_HUMAN,งับ สแลง + ติดตามพัสดุ
+slang,คือดีย์ มีโปรไหมอ่ะ,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,สแลง + ถามโปร (ไม่มี keyword ตรง)
+slang,อยากได้อ่ะ สั่งไงอ่ะ,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,สแลง สั่งไง
+multi,โกโก้เจไหม ราคาเท่าไหร่ ส่งฟรีปะ,True,I03,H1_INFORMATION_INQUIRY,False,,SAFE_HUMAN,เจ(claim)+ราคา+ส่ง
+multi,อยากสั่ง 10 ลัง ราคาส่ง แล้วมีฮาลาลไหม,True,I03,H1_INFORMATION_INQUIRY,False,,SAFE_HUMAN,ขายส่ง + ฮาลาล
+multi,ซื้อที่ไหน แล้วกินแล้วแพ้ถั่วไหม,True,I03,H2_HUMAN_DECISION,False,แพ้,SAFE_HUMAN,ซื้อ + allergy
+multi,มี workshop ไหม สมัครยังไง,True,I16,H1_INFORMATION_INQUIRY,False,,SAFE_HUMAN,อีเวนต์ + สมัคร(ข้อมูลส่วนตัว)
+contradiction,ไม่ได้จะร้องเรียนนะ แค่สงสัยราคา,False,I04,KB_CANDIDATE_HOLD,False,ร้องเรียน,HUMAN_FALL,ปฏิเสธร้องเรียน + ถามราคา
+contradiction,ไม่ได้แพ้อะไรนะ แค่ถามราคา,False,I03,H2_HUMAN_DECISION,False,แพ้,HUMAN_FALL,ปฏิเสธภูมิแพ้ + ถามราคา
+contradiction,สินค้าไม่เสียหรอก แต่กล่องบุบมา,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,บ่นเบาๆ (กล่องบุบ)
+contradiction,ตอนแรกแย่ แต่ตอนนี้โอเคแล้ว ขอบคุณ,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,เคลียร์แล้ว คำชม
+hidden_safety,เด็กกินได้ไหม ราคาเท่าไหร่,True,I04,KB_CANDIDATE_HOLD,False,เด็กกิน,SAFE_HUMAN,ความเหมาะสมกับเด็ก ซ่อนหลังราคา
+hidden_safety,คนท้องทานได้ไหมคะ ซื้อที่ไหน,True,I05,KB_CANDIDATE_HOLD,False,คนท้อง,SAFE_HUMAN,คนท้อง ซ่อนหลังช่องทาง
+hidden_safety,ลูกกินแล้วขึ้นผื่น ซื้อเพิ่มที่ไหน,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,ผื่น (อาการ) ซ่อน
+hidden_safety,กินแล้วคลื่นไส้ ตัวนี้ราคาเท่าไร,True,I04,KB_CANDIDATE_HOLD,False,คลื่นไส้,SAFE_HUMAN,คลื่นไส้ ซ่อน
+hidden_safety,ผู้สูงอายุทานได้ไหม มีขนาดเล็กไหม,True,I01,KB_CANDIDATE_HOLD,False,ผู้สูงอายุ,SAFE_HUMAN,ผู้สูงอายุ ซ่อนหลังขนาด
+hidden_safety,เบาหวานกินได้ไหม,True,I03,H2_HUMAN_DECISION,False,,SAFE_HUMAN,เบาหวาน = I03 ตรง
+hidden_complaint,ได้ของแล้วแต่ไม่โอเคเลย ซื้อเพิ่มที่ไหน,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,ไม่โอเค ซ่อน
+hidden_complaint,อยากได้เงินคืน สั่งผิดรุ่น,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,คืนเงิน
+hidden_complaint,ของที่ได้รสชาติแปลกๆ ซื้อเพิ่มได้ที่ไหน,True,I14,H2_HUMAN_DECISION,False,,SAFE_HUMAN,รสชาติ (I14) ตรง
+hidden_complaint,สั่งไปนานแล้วไม่โอเคเลยบริการ,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,ไม่โอเค บริการ
+hidden_complaint,โดนโกงรึเปล่าเนี่ย เงินหักแล้วของไม่มา,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,โกง
+spam,เพจของคุณจึงถูกบล็อก กรุณายืนยันบัญชี,,I99,H3_SECURITY_HOLD,False,,HUMAN_FALL,ฟิชชิ่ง -> H3
+spam,verify account now or page blocked,,I99,H3_SECURITY_HOLD,False,,HUMAN_FALL,ฟิชชิ่งอังกฤษ -> H3
+spam,คลิกลิงก์รับเครดิตฟรี,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,สแปมทั่วไป
+noise,👍,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,อีโมจิล้วน
+noise,???,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,เครื่องหมายล้วน
+noise,สนใจค่ะ,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,สั้น ไม่มีบริบท
+noise,.,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,จุดเดียว
+noise,ค่ะ,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,คำรับล้วน
+english,how much is it,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,อังกฤษล้วน (ไม่มี keyword ไทย)
+english,where to buy online,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,อังกฤษ where/buy/online
+english,is it vegan?,True,I03,H1_INFORMATION_INQUIRY,False,,SAFE_HUMAN,vegan = claim (I03)
+english,halal certified?,True,I03,H1_INFORMATION_INQUIRY,False,,SAFE_HUMAN,halal = claim (I03)
+decoy,สั่งสมใจจริงๆ ตัวนี้,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,'สั่งสม' มี 'สั่ง'? ไม่ตรง keyword
+decoy,ราคาคุยกันได้ไหม อยากได้จริงๆ,False,I04,KB_CANDIDATE_HOLD,True,,AUTO_OK,ต่อราคา
+decoy,โปรดปรานตัวนี้มาก,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,'โปรด' ไม่ใช่ 'โปรโมชัน'
+decoy,ช่องทางติดต่อเพจมีไหม,False,I05,KB_CANDIDATE_HOLD,True,,AUTO_OK,ช่องทาง -> I05 (ถูก)
+typo,ซื้อยังงัยคับ,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,สั่งยังไง สะกดเพี้ยน
+typo,มีโปรโมชั่นไหม,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,โปรโมชั่น (ไม้ไต่คู้) vs โปรโมชัน
+typo,ราคาส่งถูกมั้ยย,True,I07,SALES_OR_H2_REVIEW,False,,SAFE_HUMAN,ราคาส่ง = ขายส่ง
+typo,เวิร์คช็อปมีไหม,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,เวิร์คช็อป (ค) vs เวิร์กช็อป (ก)
+polysemy,ตัวนี้เปรี้ยวปากอยากกิน,False,I14,H2_HUMAN_DECISION,False,,HUMAN_FALL,'เปรี้ยว' (I14) แต่บริบทอยากกิน
+polysemy,ขมแบบผู้ใหญ่ชอบ อร่อย,False,I14,H2_HUMAN_DECISION,False,,HUMAN_FALL,'ขม' (I14) แต่เป็นคำชม
+polysemy,ส่งเป็นของขวัญได้ไหม,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,'ส่ง' ไม่ใช่ติดตามพัสดุ
+slang,เริ่ดอ่ะ ขอราคาจุก ๆ,False,I04,KB_CANDIDATE_HOLD,True,,AUTO_OK,สแลง + ราคา
+slang,มีของมะ อยากซอย,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,สแลง 'ซอย'=ซื้อ ไม่มี keyword
+slang,เทพมาก ส่งไวปะ,False,I99,HOLD_OR_NO_ACTION,False,,HUMAN_FALL,สแลง ไม่มี keyword ชัด
+contradiction,ไม่ได้ว่าของไม่ดีนะ แต่ส่งช้าไปหน่อย,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,บ่นส่งช้า แบบอ้อม
+contradiction,ไม่เคลมหรอก แค่อยากบอกว่ากล่องบุบ,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,ปฏิเสธเคลมแต่แจ้งปัญหา
+contradiction,ไม่ได้โกรธนะ แต่ผิดหวังมาก,True,I99,HOLD_OR_NO_ACTION,False,,SAFE_HUMAN,ผิดหวัง (sentiment ลบ)
+clean,ราคาเท่าไหร่คะ,False,I04,KB_CANDIDATE_HOLD,True,,AUTO_OK,ถามราคาล้วน
+clean,ซื้อที่ไหนได้บ้าง มีช่องทางไหน,False,I05,KB_CANDIDATE_HOLD,True,,AUTO_OK,ถามช่องทางล้วน
+clean,มี workshop ไหม,False,I15,KB_CANDIDATE_HOLD,True,,AUTO_OK,ถามอีเวนต์ล้วน
+clean,ขนาด 500 กรัม ราคาเท่าไหร่,False,I04,KB_CANDIDATE_HOLD,True,,AUTO_OK,ถามขนาด+ราคา
+clean,สั่งซื้อผ่าน tiktok ได้ไหม,False,I05,KB_CANDIDATE_HOLD,True,,AUTO_OK,ถามช่องทาง tiktok
+clean,เก็บในตู้เย็นได้ไหม,False,I02,KB_CANDIDATE_HOLD,True,,AUTO_OK,ถามวิธีเก็บ
