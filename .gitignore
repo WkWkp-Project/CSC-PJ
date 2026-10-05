@@ -22,3 +22,11 @@ Screenshot*.png
 *.tmp
 .DS_Store
 Thumbs.db
+
+# assist runtime / secrets (Phase 8)
+.env
+**/__pycache__/
+*.pyc
+.pytest_cache/
+*.db
+assist/data/
