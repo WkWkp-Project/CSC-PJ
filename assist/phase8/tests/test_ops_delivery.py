@@ -167,6 +167,20 @@ def test_unacked_ticket_is_escalated_then_an_ack_stops_it(tmp_path):
     assert ops.queue_stats()["acked"] == 1
 
 
+def test_sweep_stops_after_max_escalations(tmp_path):
+    engine = _engine(tmp_path)
+    ops = OpsDelivery(engine.conn)
+    ops.enqueue_from_flush(_run(engine, _event("e1", "c1", "ราคาเท่าไหร่")))
+    console = ConsoleDeliverer()
+    t = datetime.now(timezone.utc)
+    ops.deliver_pending(console, now=t)
+    for i in range(1, 8):
+        t += timedelta(seconds=1000)
+        ops.sweep(sla_seconds=900, now=t, max_escalations=2)
+        ops.deliver_pending(console, now=t + timedelta(seconds=1))
+    assert len(console.sent) == 3  # original + 2 re-nags, then silent
+
+
 def test_quality_complaint_is_high_priority(tmp_path):
     engine = _engine(tmp_path)
     ops = OpsDelivery(engine.conn)

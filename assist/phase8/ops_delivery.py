@@ -379,17 +379,19 @@ class OpsDelivery:
         self.conn.commit()
 
     @_locked
-    def sweep(self, *, sla_seconds: int = 900, now: datetime | None = None) -> dict[str, Any]:
+    def sweep(self, *, sla_seconds: int = 900, now: datetime | None = None,
+              max_escalations: int = 3) -> dict[str, Any]:
         """Re-nag any SENT ticket unacknowledged past the SLA, with rising priority.
 
         A ticket that nobody picks up is the C22 failure mode; this makes it
-        impossible for one to sit silently - it keeps coming back, louder.
+        impossible for one to sit silently - it keeps coming back, louder, but
+        at most `max_escalations` times so a group is never flooded.
         """
         now = now or _utc_now()
         cutoff = _iso(now - timedelta(seconds=sla_seconds))
         rows = self.conn.execute(
-            "SELECT outbox_id, escalations FROM handoff_outbox WHERE status='SENT' AND updated_at<=?",
-            (cutoff,),
+            "SELECT outbox_id, escalations FROM handoff_outbox WHERE status='SENT' AND updated_at<=? AND escalations<?",
+            (cutoff, max_escalations),
         ).fetchall()
         for row in rows:
             self.conn.execute(

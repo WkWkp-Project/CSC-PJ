@@ -16,6 +16,7 @@ Run:  PYTHONPATH=. python3 -m phase8.webhook_server
 from __future__ import annotations
 
 import json
+import os
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -26,6 +27,9 @@ from phase8.pipeline import AssistPipeline
 
 DEBOUNCE_SECONDS = 30.0
 SWEEP_SECONDS = 5.0
+# Re-nag of unacknowledged tickets. OFF (0) until staff have a way to acknowledge
+# from LINE; otherwise every ticket would be re-posted into the group.
+SLA_SECONDS = int(os.environ.get("ASSIST_SLA_SECONDS", "0") or 0)
 
 
 def build_pipeline() -> AssistPipeline:
@@ -86,7 +90,8 @@ def _debounce_loop(pipeline: AssistPipeline, stop: threading.Event):
     while not stop.is_set():
         try:
             pipeline.flush_due(debounce_seconds=DEBOUNCE_SECONDS)
-            pipeline.ops.sweep(sla_seconds=900)  # re-nag unacked tickets
+            if SLA_SECONDS > 0:
+                pipeline.ops.sweep(sla_seconds=SLA_SECONDS)  # re-nag unacked tickets
         except Exception:
             pass
         stop.wait(SWEEP_SECONDS)
