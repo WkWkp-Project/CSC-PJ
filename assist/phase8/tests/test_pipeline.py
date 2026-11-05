@@ -105,6 +105,32 @@ def test_normalize_line():
     assert evs[0]["text"] == "ซื้อที่ไหน"
 
 
+def test_line_group_messages_are_not_customer_cases():
+    payload = {"events": [
+        {"type": "message", "timestamp": 1, "source": {"type": "group", "groupId": "Cgroup1", "userId": "U9"},
+         "message": {"id": "m9", "type": "text", "text": "ราคาเท่าไหร่ ใครตอบหน่อย"}},
+        {"type": "message", "timestamp": 2, "source": {"type": "user", "userId": "U1"},
+         "message": {"id": "m1", "type": "text", "text": "ซื้อที่ไหน"}},
+    ]}
+    evs = normalize_line(payload, "tulip")
+    assert [e["conversation_id"] for e in evs] == ["U1"]
+
+
+def test_line_group_id_is_reported_for_setup(tmp_path, capsys):
+    cfg = _cfg(tmp_path, line_channel_secret="cs")
+    pipe = AssistPipeline.from_config(cfg)
+    body = json.dumps({"events": [
+        {"type": "join", "timestamp": 1, "source": {"type": "group", "groupId": "Cgroup1"}},
+        {"type": "message", "timestamp": 2, "source": {"type": "group", "groupId": "Cgroup1", "userId": "U9"},
+         "message": {"id": "m9", "type": "text", "text": "สวัสดี"}},
+    ]}).encode("utf-8")
+    sig = base64.b64encode(hmac.new(b"cs", body, hashlib.sha256).digest()).decode()
+    out = pipe.receive_line(body, sig, now=0.0)
+    assert out["ingested"] == 0 and out["line_groups_seen"] == ["Cgroup1", "Cgroup1"]
+    printed = capsys.readouterr().out
+    assert printed.count("Cgroup1") == 1  # logged once, not per event
+
+
 # -- end to end with fake creds: webhook -> ticket delivered -----------------
 
 def test_end_to_end_meta_to_ticket(tmp_path):

@@ -52,6 +52,8 @@ def normalize_line(payload: dict[str, Any], tenant_id: str) -> list[dict[str, An
             continue
         msg = e.get("message", {})
         src = e.get("source", {})
+        if src.get("type") in ("group", "room"):
+            continue  # staff chat, never a customer; the ticket group must not feed itself
         conv = src.get("groupId") or src.get("roomId") or src.get("userId") or ""
         mtype = msg.get("type", "text")
         events.append({
@@ -79,6 +81,7 @@ class AssistPipeline:
         # pending[(account, conversation_id)] = {"last": monotonic, "texts": [...]}
         # tracks debounce timing + the in-memory text used for reply suggestion.
         self.pending: dict[tuple[str, str], dict[str, Any]] = {}
+        self.known_line_groups: set[str] = set()
 
     @classmethod
     def from_config(cls, cfg: Config, deliverer=None) -> "AssistPipeline":
@@ -100,7 +103,24 @@ class AssistPipeline:
         if not verify_line(raw_body, signature_header, self.cfg.line_channel_secret):
             return {"accepted": False, "reason": "bad_or_unconfigured_signature"}
         payload = json.loads(raw_body.decode("utf-8"))
-        return self._ingest_all(normalize_line(payload, self.cfg.tenant_id), now=now)
+        groups = self._note_line_groups(payload)
+        out = self._ingest_all(normalize_line(payload, self.cfg.tenant_id), now=now)
+        if groups:
+            out["line_groups_seen"] = groups
+        return out
+
+    def _note_line_groups(self, payload: dict[str, Any]) -> list[str]:
+        """Print each LINE group/room id once, so setup can copy LINE_TARGET_GROUP_ID."""
+        seen = []
+        for e in payload.get("events", []):
+            src = e.get("source", {})
+            gid = src.get("groupId") or src.get("roomId")
+            if gid:
+                seen.append(gid)
+                if gid not in self.known_line_groups:
+                    self.known_line_groups.add(gid)
+                    print("[line] group id seen (set LINE_TARGET_GROUP_ID to this): %s" % gid, flush=True)
+        return seen
 
     def _ingest_all(self, events: list[dict[str, Any]], *, now: float | None = None) -> dict[str, Any]:
         now = now if now is not None else time.monotonic()

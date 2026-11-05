@@ -35,7 +35,9 @@
 3. [ ] Messaging API → **Issue Channel Access Token** (แบบ long-lived) → จดไว้
 4. [ ] **manager.line.biz** → OA ของ Tulip → Response settings → ปิด **Auto-reply** / **Greeting**, ตั้ง response mode = **Bot/Webhook**
 5. [ ] (ทำหลัง Deploy) Messaging API → **Webhook URL** = `https://<โดเมน>/webhook/line` → เปิด **Use webhook = ON** → Verify
-6. [ ] เชิญ **bot (OA) เข้า LINE กลุ่มทีม** → หา **groupId** (ดูได้จาก log webhook ตอนมีข้อความในกลุ่ม)
+6. [ ] OA Manager → Settings → Account settings → เปิด **อนุญาตให้บอทเข้าร่วมกลุ่ม** → เพิ่ม OA เป็นเพื่อน → เชิญเข้า LINE กลุ่มทีม
+7. [ ] หา **groupId**: หลัง deploy และตั้ง Webhook แล้ว พิมพ์ข้อความอะไรก็ได้ในกลุ่ม → ดู Logs ของเซิร์ฟเวอร์ จะมีบรรทัด `[line] group id seen ... C....` → copy ไปใส่ `LINE_TARGET_GROUP_ID`
+   (ข้อความที่พิมพ์ในกลุ่มจะไม่ถูกนับเป็นเคสลูกค้า)
 
 **ได้มา 3 ค่า:** `LINE_CHANNEL_SECRET` `LINE_CHANNEL_ACCESS_TOKEN` `LINE_TARGET_GROUP_ID`
 
