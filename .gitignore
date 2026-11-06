@@ -4,6 +4,12 @@
 /raw/
 /data/
 /exports/
+/output/
+# ผลลัพธ์จากสคริปต์ export/classify (มี PII)
+conversations/
+summary.csv
+classified.csv
+category_stats.csv
 # ไฟล์แชท export
 *LINE*.txt
 *Messenger*.txt
@@ -16,3 +22,11 @@ Screenshot*.png
 *.tmp
 .DS_Store
 Thumbs.db
+
+# assist runtime / secrets (Phase 8)
+.env
+**/__pycache__/
+*.pyc
+.pytest_cache/
+*.db
+assist/data/
