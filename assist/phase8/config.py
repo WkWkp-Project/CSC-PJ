@@ -17,6 +17,14 @@ def _get(name: str, default: str = "") -> str:
     return os.environ.get(name, default).strip()
 
 
+def _int(value: str, default: int) -> int:
+    try:
+        n = int(value)
+        return n if n > 0 else default
+    except ValueError:
+        return default
+
+
 @dataclass
 class Config:
     # ---- Facebook / Meta (fill these) ----
@@ -34,6 +42,9 @@ class Config:
     db_path: str                # ASSIST_DB_PATH
     kb_approved_path: str       # KB_APPROVED_PATH
     kb_draft_path: str          # KB_DRAFT_PATH
+    # ---- question-type collection (OFF by default) ----
+    store_text: bool = False        # ASSIST_STORE_TEXT=1 - keep scrubbed question text, no identity
+    text_retention_days: int = 90   # ASSIST_TEXT_RETENTION_DAYS - rows older than this are deleted
 
     @classmethod
     def from_env(cls) -> "Config":
@@ -50,6 +61,8 @@ class Config:
             db_path=_get("ASSIST_DB_PATH", "data/assist.db"),
             kb_approved_path=_get("KB_APPROVED_PATH", "phase6/config/approved_kb.json"),
             kb_draft_path=_get("KB_DRAFT_PATH", "phase6/config/kb_draft_from_research.json"),
+            store_text=_get("ASSIST_STORE_TEXT").lower() in ("1", "true", "yes"),
+            text_retention_days=_int(_get("ASSIST_TEXT_RETENTION_DAYS"), 90),
         )
 
     # ---- readiness flags (blank token => not ready, no crash) ----
@@ -93,6 +106,7 @@ class Config:
             "line_ready": self.line_ready,
             "delivery_ready": self.delivery_ready,
             "engine_ready": self.engine_ready,
+            "collecting_question_text": self.store_text,
             "can_go_live_phase1": self.engine_ready and (self.meta_ready or self.line_ready) and self.delivery_ready,
             "missing": self.missing(),
         }

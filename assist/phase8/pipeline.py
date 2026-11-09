@@ -14,6 +14,7 @@ from typing import Any
 
 from phase5.classifier_v2 import classify_v2
 from phase6.assist_mvp.engine import AssistEngine
+from phase8.collector import TextCollector
 from phase8.config import Config
 from phase8.line_deliverer import LineGroupDeliverer
 from phase8.ops_delivery import OpsDelivery
@@ -72,12 +73,13 @@ def normalize_line(payload: dict[str, Any], tenant_id: str) -> list[dict[str, An
 
 class AssistPipeline:
     def __init__(self, cfg: Config, engine: AssistEngine, ops: OpsDelivery,
-                 suggestions: SuggestionEngine, deliverer):
+                 suggestions: SuggestionEngine, deliverer, collector: TextCollector | None = None):
         self.cfg = cfg
         self.engine = engine
         self.ops = ops
         self.suggestions = suggestions
         self.deliverer = deliverer
+        self.collector = collector
         # pending[(account, conversation_id)] = {"last": monotonic, "texts": [...]}
         # tracks debounce timing + the in-memory text used for reply suggestion.
         self.pending: dict[tuple[str, str], dict[str, Any]] = {}
@@ -90,7 +92,8 @@ class AssistPipeline:
         ops = OpsDelivery(engine.conn)
         suggestions = SuggestionEngine.from_files(cfg.kb_approved_path, cfg.kb_draft_path)
         deliverer = deliverer or LineGroupDeliverer(cfg.line_channel_access_token, cfg.line_target_group_id)
-        return cls(cfg, engine, ops, suggestions, deliverer)
+        collector = TextCollector(cfg.db_path, cfg.text_retention_days) if cfg.store_text else None
+        return cls(cfg, engine, ops, suggestions, deliverer, collector)
 
     # ---- receive ----
     def receive_meta(self, raw_body: bytes, signature_header: str, *, now: float | None = None) -> dict[str, Any]:
@@ -184,5 +187,7 @@ class AssistPipeline:
         cls = res.get("classification")
         if cls and cls.get("primary_intent"):
             suggestion = self.suggestions.best(cls["primary_intent"], text)
+        if self.collector and text:
+            self.collector.add(channel_account_id, text, (cls or {}).get("primary_intent"), (cls or {}).get("route"))
         self.ops.enqueue_from_flush(res, suggestion=suggestion)
         return {"flush": res.get("status"), "delivered": self.ops.deliver_pending(self.deliverer)}

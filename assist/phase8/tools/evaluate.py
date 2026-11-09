@@ -29,9 +29,12 @@ def load(path: str) -> list[dict]:
 
 
 def evaluate(rows: list[dict]) -> dict:
-    results, bad_labels = [], []
+    results, bad_labels, unlabeled = [], [], 0
     for i, r in enumerate(rows, start=2):  # +2: header is line 1
         truth = (r.get("true_intent") or "").strip().upper()
+        if not truth:
+            unlabeled += 1
+            continue
         if truth not in VALID:
             bad_labels.append((i, truth))
             continue
@@ -64,6 +67,7 @@ def evaluate(rows: list[dict]) -> dict:
         "per_intent": per_intent, "confusions": confusions.most_common(10),
         "sensitive_total": sensitive_total, "sensitive_missed": sensitive_missed,
         "misses": [x for x in results if x["truth"] != x["pred"]], "bad_labels": bad_labels,
+        "unlabeled": unlabeled,
     }
 
 
@@ -72,7 +76,7 @@ def fmt(v) -> str:
 
 
 def report(res: dict) -> str:
-    out = ["rows scored: %d" % res["n"]]
+    out = ["rows scored: %d   (not yet labeled, skipped: %d)" % (res["n"], res["unlabeled"])]
     if not res["n"]:
         return "\n".join(out + ["nothing to score: check the true_intent column"])
     out.append("accuracy (exact intent): %s   |   fell to 'unsure' (I99): %s" % (fmt(res["accuracy"]), fmt(res["unsure_rate"])))
