@@ -57,7 +57,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
-        if parsed.path.startswith("/export/"):
+        if parsed.path == "/export" or parsed.path.startswith("/export/"):
             status, headers, body = export_response(
                 parsed.path, self.headers.get("Authorization", ""), self.pipeline.cfg)
             self.send_response(status)

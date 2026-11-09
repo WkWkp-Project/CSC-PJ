@@ -30,3 +30,6 @@ Thumbs.db
 .pytest_cache/
 *.db
 assist/data/
+
+# local run secrets
+assist/local.env

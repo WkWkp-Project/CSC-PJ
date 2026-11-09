@@ -52,3 +52,25 @@ def test_collected_csv_downloads_when_collecting(tmp_path):
 def test_collected_csv_is_hidden_when_not_collecting(tmp_path):
     cfg = _cfg(tmp_path, export_password="secret-pass", store_text=False)
     assert export_response("/export/collected.csv", _basic("secret-pass"), cfg)[0] == 404
+
+
+def test_view_page_shows_names_and_escapes_customer_text(tmp_path):
+    from phase8.pipeline import AssistPipeline
+    cfg = _cfg(tmp_path, export_password="secret-pass", store_text=True)
+    pipe = AssistPipeline.from_config(cfg)
+    pipe.collector.add("line:user", "<script>alert(1)</script> ราคาเท่าไหร่", "I04", None)
+    pipe.engine.conn.execute(
+        "INSERT INTO assist_case(case_id,tenant_id,channel_account_id,conversation_key,status,state_version,"
+        "primary_intent,route,opened_at,updated_at) VALUES('c1','t','a','k','WAITING_WAKU',1,'I04','R','2026-11-09T01:00:00','2026-11-09T01:00:00')")
+    pipe.engine.conn.commit()
+    status, headers, body = export_response("/export", _basic("secret-pass"), cfg)
+    html = body.decode("utf-8")
+    assert status == 200 and "text/html" in headers["Content-Type"]
+    assert "ราคา/ค่าส่ง (I04)" in html
+    assert "<script>" not in html and "&lt;script&gt;" in html
+    assert "default-src 'none'" in headers["Content-Security-Policy"]
+
+
+def test_view_page_needs_login(tmp_path):
+    cfg = _cfg(tmp_path, export_password="secret-pass")
+    assert export_response("/export", "", cfg)[0] == 401
