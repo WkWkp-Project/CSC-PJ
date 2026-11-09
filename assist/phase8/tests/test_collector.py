@@ -88,5 +88,7 @@ def test_cases_export_needs_no_text_collection(tmp_path):
     assert len(rows) == 1 and rows[0][1] == "I04"
     out = tmp_path / "cases.csv"
     write_cases_csv(rows, str(out))
-    assert "ราคา" not in out.read_text(encoding="utf-8-sig")  # no message text in it
+    csv_text = out.read_text(encoding="utf-8-sig")
+    assert "ราคาเท่าไหร่" not in csv_text  # no message text in it
+    assert "ราคา/ค่าส่ง" in csv_text  # but the readable category name is
     assert "I04" in cases_summary(rows)

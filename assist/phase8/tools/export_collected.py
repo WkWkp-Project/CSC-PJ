@@ -20,6 +20,12 @@ import sqlite3
 import sys
 from collections import Counter
 
+from phase8.ops_delivery import INTENT_LABEL
+
+
+def name_of(code: str | None) -> str:
+    return INTENT_LABEL.get(code or "", "")
+
 
 class ExportError(Exception):
     pass
@@ -52,9 +58,9 @@ def fetch_cases(db_path: str) -> list[tuple]:
 def cases_csv_text(rows: list[tuple]) -> str:
     buf = io.StringIO()
     w = csv.writer(buf)
-    w.writerow(["opened_at", "category", "route", "status"])
+    w.writerow(["opened_at", "category", "category_name", "route", "status"])
     for at, intent, route, status in rows:
-        w.writerow([at, intent or "", route or "", status])
+        w.writerow([at, intent or "", name_of(intent), route or "", status])
     return buf.getvalue()
 
 
@@ -67,7 +73,7 @@ def cases_summary(rows: list[tuple]) -> str:
     by_intent = Counter(r[1] or "(none)" for r in rows)
     by_day = Counter(r[0][:10] for r in rows)
     lines = ["cases: %d" % len(rows), "", "by category:"]
-    lines += ["  %-8s %d" % (k, v) for k, v in by_intent.most_common()]
+    lines += ["  %-6s %s: %d" % (k, name_of(k), v) for k, v in by_intent.most_common()]
     lines += ["", "by day:"] + ["  %s %d" % (k, v) for k, v in sorted(by_day.items())]
     return "\n".join(lines)
 
@@ -75,9 +81,9 @@ def cases_summary(rows: list[tuple]) -> str:
 def collected_csv_text(rows: list[tuple]) -> str:
     buf = io.StringIO()
     w = csv.writer(buf)
-    w.writerow(["text", "true_intent", "predicted_intent", "route", "channel", "collected_at"])
+    w.writerow(["text", "true_intent", "predicted_intent", "predicted_name", "route", "channel", "collected_at"])
     for at, channel, text, pred, route in rows:
-        w.writerow([text, "", pred or "", route or "", channel, at])
+        w.writerow([text, "", pred or "", name_of(pred), route or "", channel, at])
     return buf.getvalue()
 
 
@@ -90,7 +96,7 @@ def summary(rows: list[tuple]) -> str:
     by_intent = Counter(r[3] or "(none)" for r in rows)
     by_day = Counter(r[0][:10] for r in rows)
     lines = ["total: %d" % len(rows), "", "by predicted category:"]
-    lines += ["  %-8s %d" % (k, v) for k, v in by_intent.most_common()]
+    lines += ["  %-6s %s: %d" % (k, name_of(k), v) for k, v in by_intent.most_common()]
     lines += ["", "by day:"] + ["  %s %d" % (k, v) for k, v in sorted(by_day.items())]
     return "\n".join(lines)
 
