@@ -16,6 +16,7 @@ import hashlib
 import hmac
 import json
 import os
+import secrets
 import sys
 import time
 import urllib.request
@@ -35,13 +36,14 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("text")
     ap.add_argument("--url", default="http://localhost:%s/webhook/line" % os.environ.get("PORT", "8080"))
-    ap.add_argument("--user", default="Usimulated1", help="fake customer id; use another to simulate a second customer")
+    ap.add_argument("--user", default="", help="fake customer id; default is a new one per run, so each run "
+                    "is a separate customer (messages from one customer within 30s are merged into one case)")
     args = ap.parse_args(argv)
     secret = os.environ.get("LINE_CHANNEL_SECRET", "")
     if not secret:
         print("set LINE_CHANNEL_SECRET to the same value the server uses", file=sys.stderr)
         return 2
-    body, sig = build_request(args.text, secret, args.user)
+    body, sig = build_request(args.text, secret, args.user or "Usim" + secrets.token_hex(4))
     req = urllib.request.Request(args.url, body, {"Content-Type": "application/json", "x-line-signature": sig})
     print(urllib.request.urlopen(req, timeout=10).read().decode())
     return 0
