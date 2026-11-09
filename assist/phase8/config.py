@@ -45,6 +45,7 @@ class Config:
     # ---- question-type collection (OFF by default) ----
     store_text: bool = False        # ASSIST_STORE_TEXT=1 - keep scrubbed question text, no identity
     text_retention_days: int = 90   # ASSIST_TEXT_RETENTION_DAYS - rows older than this are deleted
+    export_password: str = ""       # ASSIST_EXPORT_PASSWORD - enables /export/* downloads (blank = off)
 
     @classmethod
     def from_env(cls) -> "Config":
@@ -63,6 +64,7 @@ class Config:
             kb_draft_path=_get("KB_DRAFT_PATH", "phase6/config/kb_draft_from_research.json"),
             store_text=_get("ASSIST_STORE_TEXT").lower() in ("1", "true", "yes"),
             text_retention_days=_int(_get("ASSIST_TEXT_RETENTION_DAYS"), 90),
+            export_password=_get("ASSIST_EXPORT_PASSWORD"),
         )
 
     # ---- readiness flags (blank token => not ready, no crash) ----
@@ -107,6 +109,7 @@ class Config:
             "delivery_ready": self.delivery_ready,
             "engine_ready": self.engine_ready,
             "collecting_question_text": self.store_text,
+            "export_enabled": bool(self.export_password),
             "can_go_live_phase1": self.engine_ready and (self.meta_ready or self.line_ready) and self.delivery_ready,
             "missing": self.missing(),
         }

@@ -23,6 +23,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
 from phase8.config import Config
+from phase8.export_http import export_response
 from phase8.pipeline import AssistPipeline
 
 DEBOUNCE_SECONDS = 30.0
@@ -56,6 +57,17 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
+        if parsed.path.startswith("/export/"):
+            status, headers, body = export_response(
+                parsed.path, self.headers.get("Authorization", ""), self.pipeline.cfg)
+            self.send_response(status)
+            for k, v in headers.items():
+                self.send_header(k, v)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+            return
         if parsed.path == "/healthz":
             self._send(200, json.dumps(self.pipeline.cfg.status(), ensure_ascii=False), "application/json")
             return
