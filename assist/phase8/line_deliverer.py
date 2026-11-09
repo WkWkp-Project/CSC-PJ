@@ -63,6 +63,7 @@ class LineGroupDeliverer:
         record = {"to": self.target_id or "(unset)", "text": text, "outbox_id": ticket.get("outbox_id")}
         if self.dry_run:
             self.sent.append(record)
+            print("[dry-run ticket, not sent to LINE]\n%s" % text, flush=True)
             return "dryrun-%d" % len(self.sent)
         payload = json.dumps({
             "to": self.target_id,

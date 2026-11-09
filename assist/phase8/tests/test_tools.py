@@ -42,3 +42,20 @@ def test_evaluate_reports_missed_sensitive(tmp_path):
     p.write_text("text,true_intent\nสวัสดีค่ะ,I07\n", encoding="utf-8")
     res = evaluate(load(str(p)))
     assert res["sensitive_total"] == 1 and len(res["sensitive_missed"]) == 1
+
+
+def test_simulated_line_message_passes_signature_check(tmp_path):
+    from phase8.config import Config
+    from phase8.pipeline import AssistPipeline
+    from phase8.tools.simulate import build_request
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2]
+    cfg = Config(
+        fb_app_secret="", fb_page_token="", fb_page_id="", fb_verify_token="",
+        line_channel_secret="cs", line_channel_access_token="", line_target_group_id="",
+        assist_hmac_secret="z" * 32, tenant_id="tulip", db_path=str(tmp_path / "p.db"),
+        kb_approved_path=str(root / "phase6/config/approved_kb.json"),
+        kb_draft_path=str(root / "phase6/config/kb_draft_from_research.json"),
+    )
+    body, sig = build_request("ราคาเท่าไหร่", "cs")
+    assert AssistPipeline.from_config(cfg).receive_line(body, sig)["ingested"] == 1
