@@ -1,0 +1,14 @@
+# Copy this folder to apps/<yourapp>/ and edit. One folder per program.
+services:
+  app:
+    build: .
+    container_name: myapp        # Caddyfile points at this name: reverse_proxy myapp:3000
+    restart: unless-stopped
+    env_file: .env               # DATABASE_URL=... from scripts/new-app-db.sh (host is "postgres")
+    networks: [backend]
+    # NO "ports:" needed: Caddy reaches the app over the "backend" network.
+
+networks:
+  backend:
+    external: true
+    name: backend

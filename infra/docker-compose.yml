@@ -1,0 +1,50 @@
+# Shared platform: one PostgreSQL + Caddy (automatic HTTPS) for up to ~5 small apps.
+# Apps live in their own compose projects and join the "backend" network (see apps/_template).
+name: platform
+
+services:
+  postgres:
+    image: postgres:16            # pinned: a major-version upgrade needs dump + restore
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    command:
+      - postgres
+      - -c
+      - max_connections=60
+      - -c
+      - shared_buffers=256MB       # sized for a 2-4 GB VPS; see README before changing
+      - -c
+      - log_min_duration_statement=1000
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: [backend]
+    # NO "ports:" on purpose: the database is reachable only from containers on "backend".
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data           # keeps the HTTPS certificates
+      - caddy_config:/config
+    networks: [backend]
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
+
+networks:
+  backend:
+    name: backend
