@@ -20,17 +20,16 @@ PostgreSQL ตัวเดียวใช้ร่วมกัน โดยแ�
 ถามผู้ให้บริการ: เป็น **KVM** ไหม, ได้ **root/SSH** ไหม, ลง **Docker** ได้ไหม, เปิดพอร์ต **80/443** ได้ไหม
 เตรียม **โดเมน** แล้วสร้าง A record ชี้ซับโดเมนของแต่ละโปรแกรมมาที่ IP ของ VPS (เช่น `s.yourbrand.com`, `influencer.yourbrand.com`)
 
-## 1. เตรียมเครื่อง (Debian 12 หรือ Ubuntu 22.04/24.04)
+## 1. เตรียมเครื่อง (แนะนำ Ubuntu 24.04 LTS; ใช้ Ubuntu 22.04 หรือ Debian 12 ก็ได้)
+ล็อกอินเป็น root แล้วรันสคริปต์เตรียมเครื่อง (อัปเดตระบบ, ไฟร์วอลล์ 22/80/443, Docker, สร้างผู้ใช้ deploy):
 ```bash
 ssh root@IP_ของ_VPS
-apt update && apt -y upgrade
-adduser deploy && usermod -aG sudo deploy     # แล้ว ssh-copy-id ใส่กุญแจ SSH และปิดการล็อกอินด้วยรหัสผ่าน
-apt -y install ufw git
-ufw allow 22 && ufw allow 80 && ufw allow 443 && ufw enable
-curl -fsSL https://get.docker.com -o get-docker.sh   # อ่านไฟล์ก่อนรัน
-sh get-docker.sh
-usermod -aG docker deploy
+curl -fsSL -o setup-vps.sh https://raw.githubusercontent.com/WkWkp-Project/CSC-PJ/claude/csc-pj-connect-3d20y0/infra/scripts/setup-vps.sh
+less setup-vps.sh      # อ่านก่อนรัน (repo เป็น private: ถ้าโหลดไม่ได้ ให้ scp ไฟล์ขึ้นไปแทน)
+bash setup-vps.sh deploy
 ```
+สคริปต์ **ไม่ปิด** การล็อกอินด้วยรหัสผ่าน ให้เปิดเทอร์มินัลใหม่ทดสอบ `ssh deploy@IP` ให้ได้ก่อน
+แล้วค่อยปิดเองใน `/etc/ssh/sshd_config` (`PasswordAuthentication no`) ไม่งั้นอาจล็อกตัวเองออกจากเครื่อง
 หมายเหตุ: พอร์ตที่ Docker เปิด (`ports:`) ข้ามกฎของ `ufw` ดังนั้น **ห้ามใส่ `ports:` ให้ postgres** (ในไฟล์ไม่มี) มีแค่ Caddy ที่เปิด 80/443
 
 ## 2. วางชุดนี้บน VPS
