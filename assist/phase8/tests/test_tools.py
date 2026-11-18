@@ -59,3 +59,27 @@ def test_simulated_line_message_passes_signature_check(tmp_path):
     )
     body, sig = build_request("ราคาเท่าไหร่", "cs")
     assert AssistPipeline.from_config(cfg).receive_line(body, sig)["ingested"] == 1
+
+
+def test_simulated_meta_message_passes_signature_check(tmp_path):
+    from phase8.config import Config
+    from phase8.pipeline import AssistPipeline
+    from phase8.tools.simulate import build_meta_request
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2]
+    cfg = Config(   # only the app secret and verify token are set: no page token needed to receive
+        fb_app_secret="APPSECRET", fb_page_token="", fb_page_id="", fb_verify_token="VTOK",
+        line_channel_secret="", line_channel_access_token="", line_target_group_id="",
+        assist_hmac_secret="z" * 32, tenant_id="tulip", db_path=str(tmp_path / "p.db"),
+        kb_approved_path=str(root / "phase6/config/approved_kb.json"),
+        kb_draft_path=str(root / "phase6/config/kb_draft_from_research.json"),
+        store_text=True,
+    )
+    pipe = AssistPipeline.from_config(cfg)
+    body, sig = build_meta_request("ราคาเท่าไหร่", "APPSECRET")
+    assert pipe.receive_meta(body, sig, now=0.0)["ingested"] == 1
+    assert pipe.receive_meta(body, "sha256=wrong", now=0.0)["accepted"] is False
+
+    pipe.flush_due(debounce_seconds=30, now=100.0)
+    (row,) = pipe.collector.rows()
+    assert row[1] == "meta" and row[3] == "I04"
