@@ -82,17 +82,31 @@ ufw allow 22 && ufw allow 80 && ufw allow 443 && ufw enable
 - ดู log (groupId ของ LINE จะโผล่ที่นี่): `journalctl -u wakuflow -f`
 
 ## 7. สำรองฐานข้อมูลทุกวัน
-`/usr/local/bin/wakuflow-backup.sh`:
+ใช้เครื่องมือในตัว (ไม่ต้องติดตั้ง sqlite3 เพิ่ม) สำรองแบบปลอดภัยแม้ระบบกำลังทำงาน ตรวจความสมบูรณ์ของไฟล์ และลบไฟล์เก่าเกิน 14 ชุดให้เอง
 ```bash
-#!/bin/sh
-sqlite3 /var/lib/wakuflow/assist.db ".backup '/var/backups/wakuflow/assist-$(date +%F).db'"
-find /var/backups/wakuflow -name 'assist-*.db' -mtime +14 -delete
+echo '30 3 * * * root cd /opt/wakuflow && PYTHONPATH=. python3 -m phase8.tools.backup_db --src /var/lib/wakuflow/assist.db --dest /var/backups/wakuflow --keep 14 >> /var/log/wakuflow-backup.log 2>&1' > /etc/cron.d/wakuflow-backup
 ```
+ทดสอบรันทันทีหนึ่งครั้ง ต้องขึ้น `backup ok: ...`
 ```bash
-chmod +x /usr/local/bin/wakuflow-backup.sh
-echo '30 3 * * * root /usr/local/bin/wakuflow-backup.sh' > /etc/cron.d/wakuflow-backup
+cd /opt/wakuflow && PYTHONPATH=. python3 -m phase8.tools.backup_db --src /var/lib/wakuflow/assist.db --dest /var/backups/wakuflow
 ```
-ควรก๊อปไฟล์สำรองออกไปเก็บนอกเครื่องเป็นครั้งคราว
+กู้คืน: `systemctl stop wakuflow` แล้วก๊อปไฟล์สำรองทับ `/var/lib/wakuflow/assist.db` แล้ว `systemctl start wakuflow`
+ไฟล์สำรองอยู่ในเครื่องเดียวกัน ควรก๊อปออกไปเก็บนอกเครื่องเป็นครั้งคราว (snapshot ของผู้ให้เช่าอาจทับของเดิมทุกสัปดาห์)
+
+## 7.1 แจ้งเตือนเข้า LINE เมื่อระบบล่ม
+ตัวเช็กรันทุกนาที แจ้งเข้ากลุ่มเดียวกับใบแจ้งงานเมื่อ `/healthz` ไม่ตอบ 2 ครั้งติด และแจ้งอีกครั้งเมื่อกลับมา (ไม่แจ้งซ้ำรัวๆ)
+```bash
+echo '* * * * * root cd /opt/wakuflow && set -a && . /etc/wakuflow.env && set +a && PYTHONPATH=. python3 -m phase8.tools.watchdog --url http://127.0.0.1:8080/healthz --state /var/lib/wakuflow/watchdog.json' > /etc/cron.d/wakuflow-watchdog
+```
+ข้อจำกัด: ตัวเช็กรันบนเครื่องเดียวกัน ถ้าทั้งเครื่องหรือเน็ตล่มจะแจ้งไม่ได้ ให้ตั้งบริการเช็กจากภายนอกฟรี (เช่น UptimeRobot) ชี้ไปที่ `https://assist.yourbrand.com/healthz` เพิ่มอีกชั้น
+
+## 7.2 หน้านโยบายความเป็นส่วนตัว (สำหรับ Meta App Review)
+ตั้งสองค่านี้ใน `/etc/wakuflow.env` แล้วรีสตาร์ท หน้าจะเปิดที่ `/privacy` และ `/data-deletion` (ถ้าไม่ตั้ง จะเป็น 404)
+```
+ASSIST_COMPANY_NAME=ชื่อบริษัทตามจริง
+ASSIST_CONTACT_EMAIL=อีเมลที่รับเรื่องข้อมูลส่วนบุคคล
+```
+ข้อความในหน้าเขียนตามที่โปรแกรมทำจริง แต่เป็นข้อความตั้งต้น ไม่ใช่คำปรึกษากฎหมาย ให้ผู้รับผิดชอบของบริษัทอ่านก่อนยื่น Meta และถ้าพฤติกรรมของโปรแกรมเปลี่ยนต้องแก้ข้อความตาม
 
 ## 8. อัปเดตโค้ด
 ```bash

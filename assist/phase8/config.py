@@ -46,6 +46,8 @@ class Config:
     store_text: bool = False        # ASSIST_STORE_TEXT=1 - keep scrubbed question text, no identity
     text_retention_days: int = 90   # ASSIST_TEXT_RETENTION_DAYS - rows older than this are deleted
     export_password: str = ""       # ASSIST_EXPORT_PASSWORD - enables /export/* downloads (blank = off)
+    company_name: str = ""          # ASSIST_COMPANY_NAME  - shown on /privacy (blank = pages off)
+    contact_email: str = ""         # ASSIST_CONTACT_EMAIL - shown on /privacy (blank = pages off)
 
     @classmethod
     def from_env(cls) -> "Config":
@@ -65,6 +67,8 @@ class Config:
             store_text=_get("ASSIST_STORE_TEXT").lower() in ("1", "true", "yes"),
             text_retention_days=_int(_get("ASSIST_TEXT_RETENTION_DAYS"), 90),
             export_password=_get("ASSIST_EXPORT_PASSWORD"),
+            company_name=_get("ASSIST_COMPANY_NAME"),
+            contact_email=_get("ASSIST_CONTACT_EMAIL"),
         )
 
     # ---- readiness flags (blank token => not ready, no crash) ----
@@ -110,6 +114,7 @@ class Config:
             "engine_ready": self.engine_ready,
             "collecting_question_text": self.store_text,
             "export_enabled": bool(self.export_password),
+            "legal_pages_enabled": bool(self.company_name and self.contact_email),
             "can_go_live_phase1": self.engine_ready and (self.meta_ready or self.line_ready) and self.delivery_ready,
             "missing": self.missing(),
         }

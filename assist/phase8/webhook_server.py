@@ -2,6 +2,7 @@
 
 Endpoints:
   GET  /healthz        -> readiness JSON (which tokens are still blank)
+  GET  /privacy, /data-deletion -> public policy pages (only when company name + email are set)
   GET  /webhook/meta   -> Meta webhook verification (hub.challenge)
   POST /webhook/meta   -> receive Messenger events  (X-Hub-Signature-256)
   POST /webhook/line   -> receive LINE events        (x-line-signature)
@@ -24,6 +25,7 @@ from urllib.parse import parse_qs, urlparse
 
 from phase8.config import Config
 from phase8.export_http import export_response
+from phase8.legal_pages import legal_response
 from phase8.pipeline import AssistPipeline
 
 DEBOUNCE_SECONDS = 30.0
@@ -65,6 +67,16 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_header(k, v)
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+            return
+        legal = legal_response(parsed.path, self.pipeline.cfg)
+        if legal is not None:
+            status, headers, body = legal
+            self.send_response(status)
+            for k, v in headers.items():
+                self.send_header(k, v)
+            self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
             return
