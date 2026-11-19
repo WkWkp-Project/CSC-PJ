@@ -1,0 +1,1330 @@
+{
+  "schema_version": "phase6-kb-draft-v1",
+  "answer_generation_enabled": false,
+  "generated_by": "phase8/build_kb_draft.py",
+  "status_note": "ALL entries are status=draft / approved=false. The engine loads ONLY status=published AND approved=true, so nothing here is served to a customer until the brand fills the «...» facts and promotes it into approved_kb.json. Questions/keywords are from chat research and VERIFIED against classify_v2. answer_mode=self_answer_candidate means the engine can auto-answer it once approved; human_assist means it routes to a person and the draft just speeds the human reply.",
+  "excluded_from_self_answer": {
+    "note": "Never given self-answer FAQ - always human, because a wrong answer is harmful or binding.",
+    "I03": "แพ้/เจ/ฮาลาล/วีแกน/โลหะหนัก/เบาหวาน - personal safety + formal product claim (H2).",
+    "I07": "ขายส่ง/ราคาส่ง/ขั้นต่ำ - commercial terms (Sales/H2).",
+    "I14": "ร้องเรียนคุณภาพ/สินค้าเสีย - complaint + possible claim (H2)."
+  },
+  "counts": {
+    "total": 57,
+    "self_answer_candidate": 35,
+    "human_assist": 22
+  },
+  "entries": [
+    {
+      "id": "faq-I01-ingredients",
+      "intents": [
+        "I01"
+      ],
+      "keywords": [
+        "ส่วนผสม"
+      ],
+      "question": "โกโก้มีส่วนผสมอะไรบ้าง",
+      "answer_draft": "«ชื่อสินค้า» มีส่วนผสมหลักคือ «ส่วนผสม» ค่ะ 🍫 (ดูรายละเอียดบนฉลากข้างบรรจุภัณฑ์)",
+      "needs_brand_input": [
+        "รายการส่วนผสมทางการต่อ SKU"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "ถ้าถามพ่วงแพ้/เจ/เบาหวาน จะเป็น I03 ส่งคน ห้ามตอบเอง"
+    },
+    {
+      "id": "faq-I01-pack-size",
+      "intents": [
+        "I01"
+      ],
+      "keywords": [
+        "ขนาด"
+      ],
+      "question": "ขนาดบรรจุมีกี่ขนาด กี่กรัม",
+      "answer_draft": "«ชื่อสินค้า» มีขนาด «รายการขนาด เช่น 100g / 500g / 1kg» ค่ะ",
+      "needs_brand_input": [
+        "ขนาดบรรจุทุกรุ่น"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I01-sugar-amount",
+      "intents": [
+        "I01"
+      ],
+      "keywords": [
+        "น้ำตาล"
+      ],
+      "question": "ปริมาณน้ำตาลกี่กรัม หวานไหม",
+      "answer_draft": "«ชื่อสินค้า» มีน้ำตาล «ปริมาณต่อหน่วยบริโภค» «ระดับความหวาน/สูตรไม่เติมน้ำตาล (ถ้ามี)» ค่ะ",
+      "needs_brand_input": [
+        "ค่าน้ำตาลต่อหน่วยบริโภค",
+        "มีสูตรไม่เติมน้ำตาลไหม"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "ถ้าลูกค้าบอกเป็นเบาหวาน/คุมน้ำตาล → I03 ส่งคน"
+    },
+    {
+      "id": "faq-I01-dutch-process",
+      "intents": [
+        "I01"
+      ],
+      "keywords": [
+        "dutchprocess"
+      ],
+      "question": "เป็นโกโก้ชนิด dutchprocess ไหม",
+      "answer_draft": "«ชื่อสินค้า» «เป็น/ไม่เป็น» โกโก้ผ่านกระบวนการ dutch process ค่ะ «อธิบายสั้นๆ ถ้าต้องการ»",
+      "needs_brand_input": [
+        "กระบวนการผลิตต่อ SKU"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I01-product-lineup",
+      "intents": [
+        "I01"
+      ],
+      "keywords": [
+        "สินค้าอะไร"
+      ],
+      "question": "มีสินค้าอะไรบ้าง มีรุ่นไหนบ้าง",
+      "answer_draft": "ตอนนี้เรามีสินค้า «รายการสินค้า/รุ่น» ค่ะ 🛍️",
+      "needs_brand_input": [
+        "รายการสินค้าทั้งหมดที่ยังจำหน่าย"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I01-cocoa-percent",
+      "intents": [
+        "I01"
+      ],
+      "keywords": [
+        "โกโก้กี่"
+      ],
+      "question": "โกโก้กี่เปอร์เซ็นต์",
+      "answer_draft": "«ชื่อสินค้า» มีปริมาณโกโก้ «เปอร์เซ็นต์» ค่ะ",
+      "needs_brand_input": [
+        "เปอร์เซ็นต์โกโก้ต่อ SKU"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I02-how-to-use",
+      "intents": [
+        "I02"
+      ],
+      "keywords": [
+        "วิธีใช้"
+      ],
+      "question": "ใช้ยังไง ใช้ทำอะไรได้บ้าง",
+      "answer_draft": "«ชื่อสินค้า» ใช้ «วิธีใช้งานหลัก เช่น ชงกับนม/น้ำร้อน อัตราส่วน...» ค่ะ ☕",
+      "needs_brand_input": [
+        "วิธีใช้งาน/อัตราส่วนที่แนะนำ"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I02-recipe",
+      "intents": [
+        "I02"
+      ],
+      "keywords": [
+        "สูตร",
+        "เมนู"
+      ],
+      "question": "มีสูตรหรือเมนูแนะนำไหม",
+      "answer_draft": "มีค่ะ 😋 เมนูแนะนำ «รายการเมนู/ลิงก์สูตร»",
+      "needs_brand_input": [
+        "เมนู/สูตรที่อยากแนะนำ",
+        "ลิงก์สูตร (ถ้ามี)"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I02-storage",
+      "intents": [
+        "I02"
+      ],
+      "keywords": [
+        "เก็บ",
+        "ตู้เย็น"
+      ],
+      "question": "เก็บรักษายังไง ต้องแช่ตู้เย็นไหม",
+      "answer_draft": "เก็บ «ชื่อสินค้า» «วิธีเก็บ เช่น ในที่แห้ง เลี่ยงแดด/ความชื้น» «ต้อง/ไม่ต้องแช่เย็น» ค่ะ",
+      "needs_brand_input": [
+        "วิธีเก็บรักษาทางการ",
+        "ต้องแช่เย็นหรือไม่",
+        "อายุหลังเปิด"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I04-price",
+      "intents": [
+        "I04"
+      ],
+      "keywords": [
+        "ราคา",
+        "เท่าไหร่"
+      ],
+      "question": "ราคาเท่าไหร่",
+      "answer_draft": "ราคา «ชื่อสินค้า» อยู่ที่ «ราคา» บาทค่ะ 💰",
+      "needs_brand_input": [
+        "ราคาขายปลีกต่อ SKU",
+        "โปรโมชันปัจจุบัน"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "ถ้าถามราคาส่ง/ยกลัง → I07 ส่งทีมขาย"
+    },
+    {
+      "id": "faq-I04-shipping-fee",
+      "intents": [
+        "I04"
+      ],
+      "keywords": [
+        "ค่าส่ง",
+        "บาท"
+      ],
+      "question": "ค่าส่งคิดยังไง กี่บาท",
+      "answer_draft": "ค่าจัดส่ง «เงื่อนไข เช่น เริ่มต้น XX บาท / ส่งฟรีเมื่อครบ XX บาท» ค่ะ 📦",
+      "needs_brand_input": [
+        "เงื่อนไขค่าจัดส่ง",
+        "เกณฑ์ส่งฟรี"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I05-where-buy",
+      "intents": [
+        "I05"
+      ],
+      "keywords": [
+        "ซื้อที่ไหน",
+        "ช่องทาง"
+      ],
+      "question": "ซื้อที่ไหนได้บ้าง มีช่องทางไหน",
+      "answer_draft": "สั่งซื้อได้ที่ช่องทางทางการของเราค่ะ 🛒 «รายชื่อช่องทาง + ลิงก์»",
+      "needs_brand_input": [
+        "ช่องทางทางการทั้งหมด",
+        "ลิงก์แต่ละช่องทาง"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I05-online-marketplace",
+      "intents": [
+        "I05"
+      ],
+      "keywords": [
+        "shopee",
+        "lazada",
+        "ออนไลน์"
+      ],
+      "question": "มีขายใน Shopee หรือ Lazada ไหม",
+      "answer_draft": "มีค่ะ 🛍️\n• Shopee: «ลิงก์»\n• Lazada: «ลิงก์»",
+      "needs_brand_input": [
+        "ลิงก์ร้าน Shopee",
+        "ลิงก์ร้าน Lazada"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I05-official-store",
+      "intents": [
+        "I05"
+      ],
+      "keywords": [
+        "จำหน่าย",
+        "ร้าน"
+      ],
+      "question": "มีหน้าร้าน หรือจำหน่ายที่ไหนบ้าง",
+      "answer_draft": "จุดจำหน่าย «รายชื่อหน้าร้าน/ตัวแทน» ค่ะ",
+      "needs_brand_input": [
+        "รายชื่อจุดจำหน่าย/หน้าร้าน"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I06-still-produced",
+      "intents": [
+        "I06"
+      ],
+      "keywords": [
+        "ยังผลิต",
+        "เลิกผลิต"
+      ],
+      "question": "ยังผลิตอยู่ไหม เลิกผลิตหรือยัง",
+      "answer_draft": "สินค้า «ชื่อ» «ยังจำหน่ายปกติ / หยุดผลิตชั่วคราว / เลิกผลิตแล้ว» ค่ะ",
+      "needs_brand_input": [
+        "สถานะการผลิตปัจจุบันต่อ SKU"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I06-out-of-stock",
+      "intents": [
+        "I06"
+      ],
+      "keywords": [
+        "ของหมด",
+        "หาซื้อไม่ได้"
+      ],
+      "question": "ของหมดหรือเปล่า หาซื้อไม่ได้เลย",
+      "answer_draft": "ขณะนี้ «ชื่อสินค้า» «สถานะสต็อก» ค่ะ «รอบของเข้าถัดไปประมาณ ...»",
+      "needs_brand_input": [
+        "สถานะสต็อก",
+        "รอบของเข้า"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I09-campaign-rules",
+      "intents": [
+        "I09"
+      ],
+      "keywords": [
+        "กติกา"
+      ],
+      "question": "กติกากิจกรรมเป็นยังไง",
+      "answer_draft": "กิจกรรม «ชื่อแคมเปญ» มีกติกา «สรุปกติกา» ระยะเวลา «วันเริ่ม-สิ้นสุด» ค่ะ 🎁",
+      "needs_brand_input": [
+        "กติกาแคมเปญปัจจุบัน",
+        "ระยะเวลา"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "ปัญหาเฉพาะตัว (แลกไม่ได้/สิทธิ์) = I11, รหัสใช้ไม่ได้ = I10 ส่งคน"
+    },
+    {
+      "id": "faq-I09-collect-points",
+      "intents": [
+        "I09"
+      ],
+      "keywords": [
+        "สะสมแต้ม"
+      ],
+      "question": "สะสมแต้มยังไง",
+      "answer_draft": "วิธีสะสมแต้ม «ขั้นตอน» ค่ะ ⭐",
+      "needs_brand_input": [
+        "วิธีสะสมแต้ม",
+        "แต้มหมดอายุไหม"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I09-redeem-howto",
+      "intents": [
+        "I09"
+      ],
+      "keywords": [
+        "แลก",
+        "ของรางวัล"
+      ],
+      "question": "แลกของรางวัลทำยังไง มีของรางวัลอะไรบ้าง",
+      "answer_draft": "การแลกของรางวัล «ขั้นตอน» ของรางวัลที่มี «รายการ» ค่ะ",
+      "needs_brand_input": [
+        "ขั้นตอนการแลก",
+        "รายการของรางวัล"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "ถ้าลูกค้าแลกแล้วมีปัญหา/ทวงของ = I11 ส่งคน"
+    },
+    {
+      "id": "faq-I09-lucky-draw",
+      "intents": [
+        "I09"
+      ],
+      "keywords": [
+        "ชิงโชค"
+      ],
+      "question": "ชิงโชคยังไง ประกาศผลเมื่อไหร่",
+      "answer_draft": "กิจกรรมชิงโชค «กติกา» ประกาศผล «วันที่/ช่องทาง» ค่ะ",
+      "needs_brand_input": [
+        "กติกาชิงโชค",
+        "วันประกาศผล",
+        "ช่องทางประกาศ"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I15-workshop",
+      "intents": [
+        "I15"
+      ],
+      "keywords": [
+        "workshop",
+        "เวิร์กช็อป"
+      ],
+      "question": "มี workshop ไหม จัดเมื่อไหร่",
+      "answer_draft": "มีค่ะ 📣 «ชื่อเวิร์กช็อป» วันที่ «วันเวลา» สถานที่ «สถานที่»",
+      "needs_brand_input": [
+        "รายละเอียดเวิร์กช็อปที่จะจัด",
+        "วันเวลา-สถานที่"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "การสมัครจริง (I16) ส่งคน เพราะมีข้อมูลส่วนตัว"
+    },
+    {
+      "id": "faq-I15-event-location",
+      "intents": [
+        "I15"
+      ],
+      "keywords": [
+        "จัดที่ไหน",
+        "ออกบูธ",
+        "กิจกรรม"
+      ],
+      "question": "จัดกิจกรรมที่ไหน มีออกบูธที่ไหนบ้าง",
+      "answer_draft": "กิจกรรม/บูธของเรา «สถานที่ + วันเวลา» ค่ะ",
+      "needs_brand_input": [
+        "ตารางออกบูธ/กิจกรรม"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I15-event-cost",
+      "intents": [
+        "I15"
+      ],
+      "keywords": [
+        "กิจกรรม"
+      ],
+      "question": "ร่วมกิจกรรมมีค่าใช้จ่ายไหม",
+      "answer_draft": "กิจกรรม «ชื่อ» «ฟรี / ค่าเข้าร่วม ... บาท» ค่ะ",
+      "needs_brand_input": [
+        "ค่าเข้าร่วมกิจกรรม (ถ้ามี)"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I01-new-product",
+      "intents": [
+        "I01"
+      ],
+      "keywords": [
+        "มีสินค้า"
+      ],
+      "question": "มีสินค้าตัวใหม่ไหม มีรุ่นใหม่ออกมาไหม",
+      "answer_draft": "ตอนนี้เรามี «สินค้าใหม่/รุ่นล่าสุด» ค่ะ ✨",
+      "needs_brand_input": [
+        "สินค้าใหม่/รุ่นล่าสุด (ถ้ามี)"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I02-shelf-life",
+      "intents": [
+        "I02"
+      ],
+      "keywords": [
+        "เก็บ"
+      ],
+      "question": "เปิดแล้วเก็บได้นานแค่ไหน อยู่ได้กี่วัน",
+      "answer_draft": "หลังเปิด «ชื่อสินค้า» เก็บได้ประมาณ «ระยะเวลา» «เงื่อนไขการเก็บ» ค่ะ",
+      "needs_brand_input": [
+        "อายุหลังเปิด",
+        "เงื่อนไขการเก็บหลังเปิด"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I02-make-drink",
+      "intents": [
+        "I02"
+      ],
+      "keywords": [
+        "วิธีใช้",
+        "สูตร"
+      ],
+      "question": "ชงยังไงให้อร่อย วิธีใช้ที่แนะนำ",
+      "answer_draft": "วิธีชง «ขั้นตอน/อัตราส่วน» ค่ะ ☕ แนะนำ «ทริค/ท็อปปิ้ง»",
+      "needs_brand_input": [
+        "วิธีชงที่แนะนำ",
+        "อัตราส่วน"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I04-promotion",
+      "intents": [
+        "I04"
+      ],
+      "keywords": [
+        "ราคา"
+      ],
+      "question": "ช่วงนี้มีลดราคาหรือโปรไหม",
+      "answer_draft": "ช่วงนี้ «มีโปร ... / ยังไม่มีโปรโมชัน» ค่ะ 🏷️",
+      "needs_brand_input": [
+        "โปรโมชันปัจจุบัน",
+        "ช่วงเวลาโปร"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I05-order-channel",
+      "intents": [
+        "I05"
+      ],
+      "keywords": [
+        "ช่องทาง",
+        "ออนไลน์"
+      ],
+      "question": "สั่งซื้อช่องทางไหนได้บ้าง สั่งตรงได้ไหม",
+      "answer_draft": "สั่งซื้อได้ทาง «ช่องทางการสั่ง เช่น แชทเพจ/ไลน์/เว็บ/มาร์เก็ตเพลส» ค่ะ 🛒",
+      "needs_brand_input": [
+        "ช่องทางการสั่งซื้อทั้งหมด",
+        "สั่งตรงได้หรือไม่"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I06-restock-when",
+      "intents": [
+        "I06"
+      ],
+      "keywords": [
+        "ยังมีขาย",
+        "ของหมด"
+      ],
+      "question": "ของหมดจะเข้าเมื่อไหร่ ยังมีขายอีกไหม",
+      "answer_draft": "สินค้า «ชื่อ» คาดว่าจะเข้าอีกครั้งประมาณ «ช่วงเวลา» ค่ะ",
+      "needs_brand_input": [
+        "รอบของเข้าถัดไป"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I09-code-location",
+      "intents": [
+        "I09"
+      ],
+      "keywords": [
+        "ของรางวัล",
+        "กติกา"
+      ],
+      "question": "โค้ดของรางวัลอยู่ตรงไหน หาไม่เจอ",
+      "answer_draft": "โค้ดร่วมกิจกรรมอยู่ที่ «ตำแหน่งบนบรรจุภัณฑ์/ใบเสร็จ» ค่ะ",
+      "needs_brand_input": [
+        "ตำแหน่งโค้ดบนสินค้า"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "ถ้าโค้ดใช้ไม่ได้/ระบบ error = I10 ส่งคน"
+    },
+    {
+      "id": "faq-I01-calories",
+      "intents": [
+        "I01"
+      ],
+      "keywords": [
+        "แคลอรี",
+        "ไขมัน",
+        "โปรตีน"
+      ],
+      "question": "มีกี่แคลอรี ไขมันเท่าไร",
+      "answer_draft": "«ชื่อสินค้า» ต่อหน่วยบริโภคมีพลังงาน «แคลอรี» ไขมัน «กรัม» โปรตีน «กรัม» ค่ะ",
+      "needs_brand_input": [
+        "ค่าโภชนาการต่อหน่วยบริโภค"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H2_HUMAN_DECISION",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I01-cocoa-powder",
+      "intents": [
+        "I01"
+      ],
+      "keywords": [
+        "ผงโกโก้",
+        "cocoa"
+      ],
+      "question": "เป็นผงโกโก้แท้ไหม",
+      "answer_draft": "«ชื่อสินค้า» เป็น «ผงโกโก้แท้ 100% / สูตรผสม ...» ค่ะ",
+      "needs_brand_input": [
+        "เป็นโกโก้แท้หรือสูตรผสม"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I02-dissolve",
+      "intents": [
+        "I02"
+      ],
+      "keywords": [
+        "ละลาย"
+      ],
+      "question": "ละลายในน้ำร้อนง่ายไหม",
+      "answer_draft": "«ชื่อสินค้า» ละลาย «ง่าย/ต้องคนสักครู่» ในน้ำ «อุณหภูมิ» ค่ะ",
+      "needs_brand_input": [
+        "คุณสมบัติการละลาย",
+        "อุณหภูมิน้ำที่แนะนำ"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I02-ratio",
+      "intents": [
+        "I02"
+      ],
+      "keywords": [
+        "อัตราส่วน"
+      ],
+      "question": "อัตราส่วนการชงที่แนะนำเท่าไร",
+      "answer_draft": "แนะนำอัตราส่วน «ผง : น้ำ/นม» ค่ะ ปรับได้ตามชอบ",
+      "needs_brand_input": [
+        "อัตราส่วนที่แนะนำ"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I04-free-shipping",
+      "intents": [
+        "I04"
+      ],
+      "keywords": [
+        "ส่งฟรี",
+        "ค่าส่ง"
+      ],
+      "question": "ส่งฟรีไหม ซื้อครบเท่าไหร่ถึงส่งฟรี",
+      "answer_draft": "«ส่งฟรีเมื่อซื้อครบ XX บาท / มีค่าส่ง XX บาท» ค่ะ 📦",
+      "needs_brand_input": [
+        "เกณฑ์ส่งฟรี",
+        "ค่าส่งปกติ"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I04-discount",
+      "intents": [
+        "I04"
+      ],
+      "keywords": [
+        "ส่วนลด",
+        "โปรโมชัน"
+      ],
+      "question": "มีส่วนลดหรือโปรโมชันไหม",
+      "answer_draft": "ช่วงนี้ «มีส่วนลด ... / ยังไม่มีโปรโมชัน» ค่ะ 🏷️",
+      "needs_brand_input": [
+        "ส่วนลด/โปรโมชันปัจจุบัน"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I05-buy-tiktok",
+      "intents": [
+        "I05"
+      ],
+      "keywords": [
+        "สั่งซื้อ",
+        "tiktok"
+      ],
+      "question": "สั่งซื้อผ่าน tiktok ได้ไหม",
+      "answer_draft": "สั่งซื้อทาง TikTok Shop ได้ค่ะ 🛒 «ลิงก์ร้าน TikTok»",
+      "needs_brand_input": [
+        "ลิงก์ร้าน TikTok (ถ้ามี)"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I05-branch",
+      "intents": [
+        "I05"
+      ],
+      "keywords": [
+        "สาขา"
+      ],
+      "question": "มีสาขาที่ไหนบ้าง",
+      "answer_draft": "จุดจำหน่าย/สาขา «รายชื่อสาขา/ตัวแทน» ค่ะ",
+      "needs_brand_input": [
+        "รายชื่อสาขา/ตัวแทนจำหน่าย"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I06-restock-q",
+      "intents": [
+        "I06"
+      ],
+      "keywords": [
+        "restock",
+        "สินค้าหมด"
+      ],
+      "question": "restock เมื่อไหร่ สินค้าหมดบ่อย",
+      "answer_draft": "สินค้า «ชื่อ» คาดว่าจะเติมสต็อกอีกครั้ง «ช่วงเวลา» ค่ะ ขออภัยในความไม่สะดวก",
+      "needs_brand_input": [
+        "รอบเติมสต็อก"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I09-current-campaign",
+      "intents": [
+        "I09"
+      ],
+      "keywords": [
+        "แคมเปญ"
+      ],
+      "question": "ตอนนี้มีแคมเปญอะไรบ้าง",
+      "answer_draft": "ตอนนี้มีแคมเปญ «ชื่อ + สรุป» ค่ะ 🎉 รายละเอียด «ลิงก์»",
+      "needs_brand_input": [
+        "แคมเปญที่กำลังจัด",
+        "ลิงก์รายละเอียด"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I15-event-upcoming",
+      "intents": [
+        "I15"
+      ],
+      "keywords": [
+        "อีเวนต์",
+        "งานแฟร์"
+      ],
+      "question": "มีอีเวนต์หรืองานแฟร์เร็วๆนี้ไหม",
+      "answer_draft": "เร็วๆ นี้มี «ชื่ออีเวนต์/งานแฟร์» วันที่ «วันเวลา» ที่ «สถานที่» ค่ะ",
+      "needs_brand_input": [
+        "อีเวนต์/งานแฟร์ที่จะจัด"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I15-teaching",
+      "intents": [
+        "I15"
+      ],
+      "keywords": [
+        "สอนทำ",
+        "สาธิต"
+      ],
+      "question": "มีคลาสสอนทำหรือสาธิตไหม",
+      "answer_draft": "มีค่ะ 👩‍🍳 «ชื่อคลาส/สาธิต» วันที่ «วันเวลา» สมัคร «ช่องทาง»",
+      "needs_brand_input": [
+        "รายละเอียดคลาส/สาธิต",
+        "ช่องทางสมัคร"
+      ],
+      "answer_mode": "self_answer_candidate",
+      "classifier_route": "KB_CANDIDATE_HOLD",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "การสมัครจริง (I16) ส่งคน"
+    },
+    {
+      "id": "faq-I03-allergy",
+      "intents": [
+        "I03"
+      ],
+      "keywords": [
+        "แพ้",
+        "ภูมิแพ้"
+      ],
+      "question": "แพ้นมแพ้ถั่ว กินได้ไหม ปลอดภัยไหม",
+      "answer_draft": "[แนวทางพนักงาน] ตอบตามข้อมูลสารก่อภูมิแพ้ทางการเท่านั้น ห้ามเดา → «ข้อมูลสารก่อภูมิแพ้ทางการ» หากไม่แน่ใจส่งต่อแบรนด์ยืนยันก่อนตอบ",
+      "needs_brand_input": [
+        "ตารางสารก่อภูมิแพ้ต่อ SKU",
+        "ผู้มีอำนาจยืนยัน"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H2_HUMAN_DECISION",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "ความปลอดภัยส่วนบุคคล - ส่งคน/แบรนด์ ห้ามระบบตอบเอง"
+    },
+    {
+      "id": "faq-I03-vegan-jay",
+      "intents": [
+        "I03"
+      ],
+      "keywords": [
+        "กินเจ",
+        "วีแกน",
+        "มังสวิรัติ"
+      ],
+      "question": "โกโก้กินเจได้ไหม เป็นวีแกนหรือมังสวิรัติไหม",
+      "answer_draft": "[แนวทางพนักงาน] ตอบตามการรับรองทางการ → «สถานะเจ/วีแกน/ส่วนผสมจากสัตว์ (ถ้ามี)»",
+      "needs_brand_input": [
+        "สถานะเจ/วีแกนต่อ SKU",
+        "มีส่วนผสมจากสัตว์ไหม"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "คำกล่าวอ้างทางการ (formal claim) - ส่งคน ห้ามระบบตอบเอง"
+    },
+    {
+      "id": "faq-I03-halal",
+      "intents": [
+        "I03"
+      ],
+      "keywords": [
+        "ฮาลาล",
+        "halal"
+      ],
+      "question": "มีฮาลาลไหม halal certified ไหม",
+      "answer_draft": "[แนวทางพนักงาน] ตอบตามใบรับรองจริง → «สถานะฮาลาล + เลขที่รับรอง (ถ้ามี)»",
+      "needs_brand_input": [
+        "สถานะฮาลาลต่อ SKU",
+        "เลขที่ใบรับรอง"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "คำกล่าวอ้างทางการ - ส่งคน ห้ามระบบตอบเอง"
+    },
+    {
+      "id": "faq-I07-wholesale",
+      "intents": [
+        "I07"
+      ],
+      "keywords": [
+        "ขายส่ง",
+        "ยกลัง",
+        "ขั้นต่ำ",
+        "ราคาส่ง"
+      ],
+      "question": "ขายส่งยกลัง ขั้นต่ำกี่ลัง ราคาส่งเท่าไหร่",
+      "answer_draft": "[ร่างช่วยทีมขาย] เงื่อนไขขายส่ง: ขั้นต่ำ «จำนวน» ราคาส่ง «ราคา/ส่วนลดขั้นบันได» เงื่อนไข «...»",
+      "needs_brand_input": [
+        "ราคาส่ง/ขั้นบันได",
+        "ขั้นต่ำการสั่ง",
+        "เงื่อนไขตัวแทน"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "SALES_OR_H2_REVIEW",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "เงื่อนไขการค้า - ส่งทีมขาย ห้ามระบบตอบเอง"
+    },
+    {
+      "id": "faq-I07-reseller",
+      "intents": [
+        "I07"
+      ],
+      "keywords": [
+        "รับไปขาย",
+        "สำหรับร้าน"
+      ],
+      "question": "อยากรับไปขาย เปิดร้าน ต้องทำยังไง",
+      "answer_draft": "[ร่างช่วยทีมขาย] การเป็นตัวแทน/รับไปขาย: «ขั้นตอน/คุณสมบัติ/ติดต่อทีมขาย»",
+      "needs_brand_input": [
+        "ขั้นตอนสมัครตัวแทน",
+        "ช่องทางติดต่อทีมขาย"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "SALES_OR_H2_REVIEW",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I08-contact-sales",
+      "intents": [
+        "I08"
+      ],
+      "keywords": [
+        "ฝ่ายขาย",
+        "เซลล์",
+        "ติดต่อกลับ"
+      ],
+      "question": "ขอติดต่อฝ่ายขาย เซลล์ ติดต่อกลับได้ไหม",
+      "answer_draft": "[ร่างช่วยทีม] รับเรื่องติดต่อทีมขาย: «ช่องทาง/เบอร์/เวลาติดต่อกลับ»",
+      "needs_brand_input": [
+        "ช่องทางติดต่อทีมขาย",
+        "เวลาทำการ"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "SALES_OR_H2_REVIEW",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I10-code-error",
+      "intents": [
+        "I10"
+      ],
+      "keywords": [
+        "รหัสไม่",
+        "ระบบขึ้น",
+        "code"
+      ],
+      "question": "ใส่รหัสไม่ได้ ระบบขึ้น error",
+      "answer_draft": "[ร่างช่วยทีม] แก้ปัญหารหัส: «ขั้นตอนเบื้องต้น เช่น ตรวจตัวอักษร/ช่องว่าง» หากยังไม่ได้ส่งต่อทีมดูแลระบบ",
+      "needs_brand_input": [
+        "ขั้นตอนแก้ปัญหารหัสเบื้องต้น",
+        "ทีมดูแลระบบรหัส"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I11-redeem-problem",
+      "intents": [
+        "I11"
+      ],
+      "keywords": [
+        "แลกของ",
+        "กดแลก",
+        "สิทธิ์"
+      ],
+      "question": "กดแลกของรางวัลแล้วยังไม่ได้ของ สิทธิ์หายไป",
+      "answer_draft": "[ร่างช่วยทีม] ตรวจสอบสถานะการแลก/สิทธิ์รายเคส: «ขอข้อมูลยืนยันตัวตน/เลขอ้างอิง» แล้วตรวจในระบบ",
+      "needs_brand_input": [
+        "ขั้นตอนตรวจสอบสิทธิ์",
+        "ข้อมูลที่ต้องขอจากลูกค้า"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "มีข้อมูลส่วนตัว - ส่งคน"
+    },
+    {
+      "id": "faq-I12-tracking",
+      "intents": [
+        "I12"
+      ],
+      "keywords": [
+        "ยังไม่ได้รับ",
+        "เลขพัสดุ",
+        "tracking"
+      ],
+      "question": "ยังไม่ได้รับของเลย ขอเลขพัสดุ tracking",
+      "answer_draft": "[ร่างช่วยทีม] ตรวจสอบการจัดส่งรายเคส: «ขอเลขออเดอร์/ชื่อ» แล้วแจ้งเลขพัสดุ + สถานะ",
+      "needs_brand_input": [
+        "ขั้นตอนเช็กเลขพัสดุ",
+        "ข้อมูลที่ต้องขอจากลูกค้า"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "มีข้อมูลส่วนตัว - ส่งคน"
+    },
+    {
+      "id": "faq-I13-change-address",
+      "intents": [
+        "I13"
+      ],
+      "keywords": [
+        "เปลี่ยนที่อยู่",
+        "ที่อยู่",
+        "ชื่อผู้รับ"
+      ],
+      "question": "ขอเปลี่ยนที่อยู่จัดส่ง แก้ชื่อผู้รับ",
+      "answer_draft": "[ร่างช่วยทีม] รับเรื่องแก้ที่อยู่: «ยืนยันตัวตน + ขอที่อยู่ใหม่» แล้วอัปเดตก่อนตัดรอบส่ง",
+      "needs_brand_input": [
+        "ขั้นตอนแก้ที่อยู่",
+        "เดดไลน์ก่อนตัดรอบส่ง"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "มีข้อมูลส่วนตัว - ส่งคน"
+    },
+    {
+      "id": "faq-I14-quality-complaint",
+      "intents": [
+        "I14"
+      ],
+      "keywords": [
+        "ร้องเรียนคุณภาพ",
+        "สินค้าเสีย",
+        "ผิดปกติ",
+        "รสชาติ"
+      ],
+      "question": "สินค้าเสีย รสชาติผิดปกติ ขอร้องเรียนคุณภาพ",
+      "answer_draft": "[แนวทางพนักงาน] 1) ขอโทษและรับเรื่อง 2) ขอรูป+เลขล็อต/วันผลิต 3) ส่งต่อแบรนด์พิจารณาตาม «นโยบายชดเชยอ้างอิง» ห้ามรับปากชดเชยเอง",
+      "needs_brand_input": [
+        "ขั้นตอนรับเรื่องร้องเรียน",
+        "นโยบายชดเชย",
+        "ผู้อนุมัติ"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H2_HUMAN_DECISION",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "ร้องเรียน+อาจมีการเคลม - ส่งแบรนด์ตัดสิน ห้ามระบบตอบเอง"
+    },
+    {
+      "id": "faq-I14-package-damaged",
+      "intents": [
+        "I14"
+      ],
+      "keywords": [
+        "แตก",
+        "รั่ว",
+        "ฉลากลอก"
+      ],
+      "question": "กล่องแตก สินค้ารั่ว ฉลากลอก",
+      "answer_draft": "[แนวทางพนักงาน] ขอรูปความเสียหาย + เลขล็อต ทาง «ช่องทางส่งรูป» แล้วส่งต่อแบรนด์/ทีมคุณภาพพิจารณา",
+      "needs_brand_input": [
+        "ขั้นตอนเคสสินค้าเสียหาย",
+        "ผู้รับผิดชอบ"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H2_HUMAN_DECISION",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "อาจมีการเคลม - ส่งคน/แบรนด์"
+    },
+    {
+      "id": "faq-I16-register",
+      "intents": [
+        "I16"
+      ],
+      "keywords": [
+        "สมัคร",
+        "ลงทะเบียน",
+        "เข้าร่วม"
+      ],
+      "question": "สมัครเข้าร่วมกิจกรรมยังไง ลงทะเบียนตรงไหน",
+      "answer_draft": "[ร่างช่วยทีม] วิธีสมัคร/ลงทะเบียน: «ขั้นตอน/ลิงก์ฟอร์ม» (ถ้าต้องกรอกข้อมูลส่วนตัวให้ทีมช่วยดำเนินการ)",
+      "needs_brand_input": [
+        "ขั้นตอน/ลิงก์สมัคร"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null,
+      "safety_note": "อาจมีข้อมูลส่วนตัว - ส่งคน"
+    },
+    {
+      "id": "faq-I17-collab",
+      "intents": [
+        "I17"
+      ],
+      "keywords": [
+        "บริษัท",
+        "เสนอ",
+        "ร่วมงาน",
+        "โรงงาน",
+        "ผู้ผลิต"
+      ],
+      "question": "บริษัทอยากเสนอร่วมงาน ขอข้อมูลโรงงาน/ผู้ผลิต",
+      "answer_draft": "[ร่างช่วยทีม] รับเรื่องธุรกิจ/สื่อ/ความร่วมมือ: «ขอรายละเอียดข้อเสนอ + ส่งต่อผู้เกี่ยวข้อง»",
+      "needs_brand_input": [
+        "ช่องทางรับเรื่องธุรกิจ",
+        "ผู้รับผิดชอบ"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "SALES_OR_H2_REVIEW",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    },
+    {
+      "id": "faq-I18-follow-up",
+      "intents": [
+        "I18"
+      ],
+      "keywords": [
+        "ความคืบหน้า",
+        "ถึงไหน",
+        "ติดต่อกลับหรือยัง"
+      ],
+      "question": "เรื่องที่แจ้งไปความคืบหน้าถึงไหนแล้ว",
+      "answer_draft": "[ร่างช่วยทีม] เช็กสถานะเคสเดิมจากเลขอ้างอิง แล้วอัปเดตลูกค้า: «สถานะล่าสุด»",
+      "needs_brand_input": [
+        "วิธีเช็กสถานะเคสเดิม"
+      ],
+      "answer_mode": "human_assist",
+      "classifier_route": "H1_INFORMATION_INQUIRY",
+      "routing_verified": true,
+      "source": "chat_research_messenger_line",
+      "status": "draft",
+      "approved": false,
+      "approved_by": null
+    }
+  ]
+}

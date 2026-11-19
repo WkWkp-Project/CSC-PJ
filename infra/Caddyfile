@@ -1,0 +1,11 @@
+{
+    # e-mail used for the HTTPS certificates (expiry notices)
+    email you@yourcompany.com
+}
+
+# One block per app: public hostname -> container name and port on the "backend" network.
+# The hostname must already point at this VPS (DNS A record).
+#
+# app1.yourcompany.com {
+#     reverse_proxy app1:3000
+# }

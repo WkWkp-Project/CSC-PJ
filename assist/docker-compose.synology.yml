@@ -1,0 +1,12 @@
+# For Synology Container Manager (Project). Publishes the port on the NAS itself only,
+# so the only way in from outside is the DSM reverse proxy (HTTPS).
+services:
+  assist:
+    build: .
+    ports:
+      - "127.0.0.1:8080:8080"
+    env_file:
+      - .env            # create it next to this file (copy local.env.example); never share it
+    volumes:
+      - ./data:/app/data   # keeps assist.db when the container is rebuilt
+    restart: unless-stopped
